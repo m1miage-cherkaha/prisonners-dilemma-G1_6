@@ -1,5 +1,14 @@
 # Template Dilemme du Prisonnier
 
-Ce template va avoir deux mains différentes :
-* `Main` -> pour une application Java simple
-* `PrisonersDilemmaApp` -> le nom complet de la seconde application doit être ici
+### Pré-requis
+Avoir installé 
+* docker compose
+* docker desktop
+* maven
+
+## Pour lancer le projet
+1. Monter démon docker
+`
+   docker-compose -f docker/docker-compose.yml up &
+`
+2. Lancer le projet depuis l'interface d'intellij
