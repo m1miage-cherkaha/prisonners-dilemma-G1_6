@@ -1,6 +1,8 @@
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
 import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
+import fr.uga.l3miage.pc.prisonersdilemma.models.Strategie;
+import fr.uga.l3miage.pc.prisonersdilemma.models.strategies.*;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,33 @@ public class PartieService {
         }
     }
 
+    public void joueurAbandonne(Partie partie, Long joueurId, String strategieChoisie) {
+        Strategie strategieServeur = choisirStrategie(strategieChoisie);
+
+        // Si c'est joueur1 qui abandonne
+        if (partie.getJoueur1().getId().equals(joueurId)) {
+            partie.setStrategieJoueur1(strategieServeur);
+        } else {
+            // Si c'est joueur2 qui abandonne
+            partie.setStrategieJoueur2(strategieServeur);
+        }
+    }
+    private Strategie choisirStrategie(String strategieChoisie) {
+        switch (strategieChoisie.toLowerCase()) {
+            case "toujours_cooperer":
+                return new CoopererStrategie();
+            case "toujours_trahir":
+                return new TrahirStrategie();
+            case "donnant_donnant":
+                return new DonnantDonnantStrategie();
+            case "rancunier":
+                return new RancunierStrategie();
+            case "aleatoire":
+                return new AleatoireStrategie();
+            default:
+                throw new IllegalArgumentException("Stratégie non reconnue : " + strategieChoisie);
+        }
+    }
     public void jouerTour(Partie partie, String choixJoueur1, String choixJoueur2) {
         partie.getJoueur1().setChoix(choixJoueur1);
         partie.getJoueur2().setChoix(choixJoueur2);

@@ -33,5 +33,15 @@ public class PartieController {
         Partie partie = partieService.getPartie(id);
         return ResponseEntity.ok(partie);
     }
+    @PostMapping("/{partieId}/abandon")
+    public ResponseEntity<?> joueurAbandonne(
+            @PathVariable Long partieId,
+            @RequestParam Long joueurId,
+            @RequestParam String strategieChoisie) {
+
+        Partie partie = partieService.getPartie(partieId);
+        partieService.joueurAbandonne(partie, joueurId, strategieChoisie);
+        return ResponseEntity.ok("Le joueur a abandonné et la stratégie " + strategieChoisie + " est appliquée.");
+    }
 }
 
