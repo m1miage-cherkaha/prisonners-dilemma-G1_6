@@ -1,16 +1,9 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 
-@Entity
-public abstract class Strategie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    public Strategie(){}
+import java.util.List;
 
-    public abstract Decision adapterStrategie();
-
+public interface Strategie {
+    Decision faireChoix(List<Decision> coupsAdversaire);
 }

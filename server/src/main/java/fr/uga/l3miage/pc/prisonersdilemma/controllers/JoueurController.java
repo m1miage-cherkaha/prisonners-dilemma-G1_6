@@ -18,13 +18,13 @@ public class JoueurController {
     }
 
     // Récupérer la liste des joueurs
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Joueur>> getAllJoueurs() {
         return ResponseEntity.ok(joueurService.getAllJoueurs());
     }
 
     // Créer un nouveau joueur
-    @PostMapping
+    @PostMapping("/nouveau")
     public ResponseEntity<Joueur> createJoueur(@RequestBody Joueur joueur) {
         return ResponseEntity.ok(joueurService.createJoueur(joueur));
     }
