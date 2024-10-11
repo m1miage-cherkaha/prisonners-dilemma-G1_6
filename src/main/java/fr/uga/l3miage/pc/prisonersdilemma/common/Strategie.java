@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonersdilemma.Common;
+package fr.uga.l3miage.pc.prisonersdilemma.common;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 

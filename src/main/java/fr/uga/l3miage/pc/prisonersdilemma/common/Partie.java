@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonersdilemma.Common;
+package fr.uga.l3miage.pc.prisonersdilemma.common;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Partie implements Runnable {
 
     private int scoreJoueur2;
 
-    private int nbTours = 5;// Par exemple, 5 tours par partie
+    private int nbTours = 5;
 
     private List<Tour> tours;
 
@@ -30,7 +30,7 @@ public class Partie implements Runnable {
     }
 
     @Override
-    synchronized public void run() {
+    public synchronized void run() {
         try {
             for (int i = 1; i <= nbTours; i++) {
                 joueur1.envoyerMessage("Tour " + i + " de la partie.");

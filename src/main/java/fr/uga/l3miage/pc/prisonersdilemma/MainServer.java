@@ -1,11 +1,10 @@
 package fr.uga.l3miage.pc.prisonersdilemma;
 
-import fr.uga.l3miage.pc.prisonersdilemma.Common.Joueur;
-import fr.uga.l3miage.pc.prisonersdilemma.Common.Partie;
+import fr.uga.l3miage.pc.prisonersdilemma.common.Joueur;
+import fr.uga.l3miage.pc.prisonersdilemma.common.Partie;
 
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 public class MainServer {
     private static final int PORT = 8001;
@@ -40,7 +39,6 @@ public class MainServer {
             // Lancer la partie dans un thread
             Thread partieThread = new Thread(partie);
             partieThread.start();
-            partie.run();
             partieThread.join(); // Attendre la fin de la partie
 
             // Fermer les connexions

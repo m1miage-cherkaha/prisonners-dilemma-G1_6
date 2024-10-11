@@ -1,6 +1,6 @@
-package fr.uga.l3miage.pc.prisonersdilemma.Strategies;
+package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
-import fr.uga.l3miage.pc.prisonersdilemma.Common.Strategie;
+import fr.uga.l3miage.pc.prisonersdilemma.common.Strategie;
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 
 import java.util.List;
