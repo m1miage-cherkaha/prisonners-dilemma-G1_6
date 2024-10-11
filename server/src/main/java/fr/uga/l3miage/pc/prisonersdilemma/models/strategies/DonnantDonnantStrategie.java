@@ -8,6 +8,12 @@ import java.util.List;
 public class DonnantDonnantStrategie implements Strategie {
     @Override
     public Decision faireChoix(List<Decision> coupsAdversaire) {
-        return coupsAdversaire.getLast();
+        Decision lastDecision = Decision.COOPERER;
+        if (!coupsAdversaire.isEmpty()) {
+           lastDecision = coupsAdversaire.get(coupsAdversaire.size() - 1);
+            // Proceed with using lastDecision
+        }
+
+        return lastDecision;
     }
 }
