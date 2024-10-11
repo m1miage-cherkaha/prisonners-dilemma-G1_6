@@ -6,5 +6,19 @@ public enum TypeStrategie {
     DONNANT_DONNANT,
     RANCUNIER,
     ALEATOIRE
+    ;
+    static public TypeStrategie fromString(String strategie) {
+        if (strategie.equals("TOUJOURS_COOPERER")) {
+            return TOUJOURS_COOPERER;
+        } else if (strategie.equals("TOUJOURS_TRAHIR")) {
+            return TOUJOURS_TRAHIR;
+        } else if (strategie.equals("DONNANT_DONNANT")) {
+            return DONNANT_DONNANT;
+        } else if (strategie.equals("RANCUNIER")) {
+            return RANCUNIER;
+        } else {
+            return ALEATOIRE;
+        }
+    }
 
 }

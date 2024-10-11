@@ -1,8 +1,5 @@
-package fr.uga.l3miage.pc.prisonersdilemma.responses;
+package fr.uga.l3miage.pc.prisonnersdilemma.responses;
 
-import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Strategie;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,10 +15,10 @@ public class PartieResponseDTO {
     private Long joueur2Id;
 
 
-    public PartieResponseDTO(Partie partie){
+   /* public PartieResponseDTO(Partie partie){
         this.id = partie.getId();
         this.joueur1Id =  partie.getJoueur1().getId();
         this.joueur2Id = partie.getJoueur2().getId();
 
-    }
+    }*/
 }

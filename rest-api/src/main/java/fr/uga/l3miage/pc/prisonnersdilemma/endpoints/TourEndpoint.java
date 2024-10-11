@@ -1,8 +1,5 @@
-package fr.uga.l3miage.pc.prisonersdilemma.endpoints;
+package fr.uga.l3miage.pc.prisonnersdilemma.endpoints;
 
-import fr.uga.l3miage.pc.prisonersdilemma.requests.TourRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.TourResponseDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

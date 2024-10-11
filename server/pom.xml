@@ -14,6 +14,11 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <artifactId>rest-api</artifactId>
+            <groupId>fr.uga.miage.m1</groupId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- Lombok dependency -->
         <dependency>
             <groupId>org.projectlombok</groupId>
