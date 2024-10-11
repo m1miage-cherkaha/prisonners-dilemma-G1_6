@@ -1,42 +1,52 @@
 package fr.uga.l3miage.pc.prisonersdilemma;
 
-import fr.uga.l3miage.pc.prisonersdilemma.Common.Jeu;
 import fr.uga.l3miage.pc.prisonersdilemma.Common.Joueur;
+import fr.uga.l3miage.pc.prisonersdilemma.Common.Partie;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class MainServer {
     private static final int PORT = 8001;
-    private static Joueur joueur1 = null;
-    private static Joueur joueur2 = null;
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Serveur démarré sur le port " + PORT);
+            System.out.println("Serveur lancé et en attente de connexions...");
 
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Un joueur s'est connecté.");
+            // Attendre la connexion des deux joueurs
+            Socket joueur1Socket = serverSocket.accept();
+            System.out.println("Joueur 1 connecté.");
+            PrintWriter outJoueur1 = new PrintWriter(joueur1Socket.getOutputStream(), true);
+            BufferedReader inJoueur1 = new BufferedReader(new InputStreamReader(joueur1Socket.getInputStream()));
 
-                if (joueur1 == null) {
-                    joueur1 = new Joueur("Joueur 1", clientSocket);
-                    System.out.println("Joueur 1 connecté !");
+            // Le joueur 1 choisit le nombre de tours
+            outJoueur1.println("Vous êtes le premier joueur. Choisissez le nombre de tours:");
+            int nbTours = Integer.parseInt(inJoueur1.readLine());
 
+            Socket joueur2Socket = serverSocket.accept();
+            System.out.println("Joueur 2 connecté.");
+            PrintWriter outJoueur2 = new PrintWriter(joueur2Socket.getOutputStream(), true);
+            BufferedReader inJoueur2 = new BufferedReader(new InputStreamReader(joueur2Socket.getInputStream()));
 
-                } else if (joueur2 == null) {
-                    joueur2 = new Joueur("Joueur 2", clientSocket);
-                    System.out.println("Joueur 2 connecté !");
+            outJoueur1.println("Joueur 2 connecté. La partie commence.");
+            outJoueur2.println("Vous êtes le deuxième joueur. La partie commence avec " + nbTours + " tours.");
 
-                    // Quand deux joueurs sont connectés, démarrer la partie dans un nouveau thread
-                    new Thread(new Jeu(joueur1, joueur2)).start();
+            // Créer une partie
+            Joueur joueur1 = new Joueur("Joueur 1", inJoueur1, outJoueur1);
+            Joueur joueur2 = new Joueur("Joueur 2", inJoueur2, outJoueur2);
+            Partie partie = new Partie(joueur1, joueur2, nbTours);
 
-                    // Réinitialiser les joueurs pour permettre à de nouveaux joueurs de se connecter
-                    joueur1 = null;
-                    joueur2 = null;
-                }
-            }
-        } catch (IOException e) {
+            // Lancer la partie dans un thread
+            Thread partieThread = new Thread(partie);
+            partieThread.start();
+            partie.run();
+            partieThread.join(); // Attendre la fin de la partie
+
+            // Fermer les connexions
+            joueur1Socket.close();
+            joueur2Socket.close();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

@@ -1,16 +1,32 @@
 package fr.uga.l3miage.pc.prisonersdilemma.Common;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Jeu implements Runnable {
+public class Partie implements Runnable {
     private Joueur joueur1;
     private Joueur joueur2;
-    private int nbTours = 5;  // Par exemple, 5 tours par partie
 
-    public Jeu(Joueur joueur1, Joueur joueur2) {
+    private int scoreJoueur1;
+
+    private int scoreJoueur2;
+
+    private int nbTours = 5;// Par exemple, 5 tours par partie
+
+    private List<Tour> tours;
+
+    public Partie(Joueur joueur1, Joueur joueur2, int nbTours) {
         this.joueur1 = joueur1;
         this.joueur2 = joueur2;
+        this.nbTours = nbTours;
+        this.scoreJoueur1=0;
+        this.scoreJoueur2=0;
+        this.tours = new ArrayList<>();
+        for(int i=0;i<nbTours;i++){
+            Tour t = new Tour();
+            this.tours.add(t);
+        }
     }
 
     @Override
@@ -28,8 +44,8 @@ public class Jeu implements Runnable {
 
                 calculerScore(choixJoueur1, choixJoueur2);
 
-                joueur1.envoyerMessage("Votre score est maintenant : " + joueur1.getScore());
-                joueur2.envoyerMessage("Votre score est maintenant : " + joueur2.getScore());
+                joueur1.envoyerMessage("Votre score est maintenant : " + scoreJoueur1);
+                joueur2.envoyerMessage("Votre score est maintenant : " + scoreJoueur2);
             }
 
             afficherResultatFinal();
@@ -37,38 +53,37 @@ public class Jeu implements Runnable {
             e.printStackTrace();
         }
     }
-
     private void calculerScore(String choixJoueur1, String choixJoueur2) {
         if (choixJoueur1.equals("c") && choixJoueur2.equals("c")) {
             // Coopération mutuelle
-            joueur1.ajouterPoints(3);
-            joueur2.ajouterPoints(3);
+            scoreJoueur1 += (3);
+            scoreJoueur2 +=(3);
         } else if (choixJoueur1.equals("t") && choixJoueur2.equals("t")) {
             // Trahison mutuelle
-            joueur1.ajouterPoints(1);
-            joueur2.ajouterPoints(1);
+            scoreJoueur1 += (1);
+            scoreJoueur2 +=(1);
         } else if (choixJoueur1.equals("t") && choixJoueur2.equals("c")) {
             // Joueur 1 trahit, Joueur 2 coopère
-            joueur1.ajouterPoints(5);
-            joueur2.ajouterPoints(0);
+            scoreJoueur1 += (5);
+            scoreJoueur2 +=(0);
         } else if (choixJoueur1.equals("c") && choixJoueur2.equals("t")) {
             // Joueur 1 coopère, Joueur 2 trahit
-            joueur1.ajouterPoints(0);
-            joueur2.ajouterPoints(5);
+            scoreJoueur1 +=(0);
+            scoreJoueur2 +=(5);
         }
     }
 
     private void afficherResultatFinal() {
-        String messageFinalJ1 = "Résultat final : " + joueur1.getNom() + " : " + joueur1.getScore() + " points";
-        String messageFinalJ2 = "Résultat final : " + joueur2.getNom() + " : " + joueur2.getScore() + " points";
+        String messageFinalJ1 = "Résultat final : " + joueur1.getNom() + " : " + scoreJoueur1 + " points";
+        String messageFinalJ2 = "Résultat final : " + joueur2.getNom() + " : " + scoreJoueur2 + " points";
 
         joueur1.envoyerMessage(messageFinalJ1);
         joueur2.envoyerMessage(messageFinalJ2);
 
-        if (joueur1.getScore() > joueur2.getScore()) {
+        if (scoreJoueur1 > scoreJoueur2) {
             joueur1.envoyerMessage("Vous avez gagné !");
             joueur2.envoyerMessage("Vous avez perdu !");
-        } else if (joueur2.getScore() > joueur1.getScore()) {
+        } else if (scoreJoueur2 > scoreJoueur1) {
             joueur2.envoyerMessage("Vous avez gagné !");
             joueur1.envoyerMessage("Vous avez perdu !");
         } else {
