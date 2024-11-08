@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Partie /* implements Runnable*/ {
+public class Partie{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

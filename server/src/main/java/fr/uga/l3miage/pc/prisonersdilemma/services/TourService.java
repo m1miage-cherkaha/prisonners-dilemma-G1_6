@@ -16,7 +16,7 @@ public class TourService {
 
  @Autowired
  public TourService(TourRepository tourRepository){
-  this.tourRepository =tourRepository;
+  this.tourRepository = tourRepository;
 
  }
 
@@ -35,43 +35,42 @@ public class TourService {
   // Sauvegarder le nouveau tour dans la base de données
   return tourRepository.save(tour);
  }
- public Tour calculerPoints(Decision decisionJoueur1, Decision decisionJoueur2,Tour tour) {
-  // Valeurs des gains selon l'énoncé
-  int T = 5;  // Gain pour celui qui trahit quand l'autre coopère
-  int D = 0;  // Gain pour celui qui coopère et se fait trahir
-  int C = 3;  // Gain pour les deux quand ils coopèrent
-  int P = 1;  // Gain pour les deux quand ils trahissent
+ public void calculerPoints(Tour tour, Decision decisionJoueur1, Decision decisionJoueur2) {
+  // Valeurs Des gains selon l'énoncé
+  int t = 5;  // Gain pour celui qui trahit quanD l'autre coopère
+  int d = 0;  // Gain pour celui qui coopère et se fait trahir
+  int c = 3;  // Gain pour les Deux quanD ils coopèrent
+  int p = 1;  // Gain pour les Deux quanD ils trahissent
 
-  // Cas où les deux joueurs coopèrent [c, c]
+  // cas où les Deux joueurs coopèrent [c, c]
   if (decisionJoueur1 == Decision.COOPERER && decisionJoueur2 == Decision.COOPERER) {
-   tour.setPointJoueur1(C);
-   tour.setPointJoueur2(C);
+   tour.setPointJoueur1(c);
+   tour.setPointJoueur2(c);
   }
-  // Cas où le joueur 1 trahit et le joueur 2 coopère [t, c]
+  // cas où le joueur 1 trahit et le joueur 2 coopère [t, c]
   else if (decisionJoueur1 == Decision.TRAHIR && decisionJoueur2 == Decision.COOPERER) {
-   tour.setPointJoueur1(T);
-   tour.setPointJoueur2(D);
+   tour.setPointJoueur1(t);
+   tour.setPointJoueur2(d);
   }
-  // Cas où le joueur 1 coopère et le joueur 2 trahit [c, t]
+  // cas où le joueur 1 coopère et le joueur 2 trahit [c, t]
   else if (decisionJoueur1 == Decision.COOPERER && decisionJoueur2 == Decision.TRAHIR) {
-   tour.setPointJoueur1(D);
-   tour.setPointJoueur2(T);
+   tour.setPointJoueur1(d);
+   tour.setPointJoueur2(t);
   }
-  // Cas où les deux joueurs trahissent [t, t]
+  // cas où les Deux joueurs trahissent [t, t]
   else if (decisionJoueur1 == Decision.TRAHIR && decisionJoueur2 == Decision.TRAHIR) {
-    tour.setPointJoueur1(P);
-    tour.setPointJoueur2(P);
+   tour.setPointJoueur1(p);
+   tour.setPointJoueur2(p);
   }
-  return tourRepository.save(tour);
+  tourRepository.save(tour);
  }
 
- public Tour jouer(Decision decisionJoueur1, Decision decisionJoueur2, Tour tour) {
-  tour.setDecisionJoueur1(decisionJoueur1);
-  tour.setDecisionJoueur2(decisionJoueur2);
-
-
-  return calculerPoints(decisionJoueur1, decisionJoueur2, tour);
- }
+// public int jouer(Decision decisionJoueur1, Decision decisionJoueur2, Tour tour) {
+//  tour.setDecisionJoueur1(decisionJoueur1);
+//  tour.setDecisionJoueur2(decisionJoueur2);
+//
+//  return calculerPoints(decisionJoueur1, decisionJoueur2, tour);
+// }
 
 
 

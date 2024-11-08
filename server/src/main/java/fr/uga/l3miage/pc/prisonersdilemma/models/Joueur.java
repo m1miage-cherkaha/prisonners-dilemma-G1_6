@@ -16,8 +16,8 @@ public class Joueur {
     private Long id;
 
     private String nom;
-    private int score;
-    private String choix;
+    private int score; // pas sur qu'on garde ça
+    private String choix; // what is this
 
     public void ajouterPoints(int points) {
         this.score += points;
