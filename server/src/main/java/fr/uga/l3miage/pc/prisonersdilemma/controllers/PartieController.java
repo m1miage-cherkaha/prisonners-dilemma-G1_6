@@ -1,47 +1,33 @@
 package fr.uga.l3miage.pc.prisonersdilemma.controllers;
 
 
+import fr.uga.l3miage.pc.prisonersdilemma.endpoints.PartieEndpoint;
+import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.services.PartieService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Part;
+
 @RestController
-@RequestMapping("/api/parties")
-public class PartieController {
+@RequiredArgsConstructor
+public class PartieController implements PartieEndpoint {
     private final PartieService partieService;
 
-    public PartieController(PartieService partieService) {
-        this.partieService = partieService;
+   @Override
+   public PartieResponseDTO createPartie(PartieCreationRequest partieCreationRequest){
+        return partieService.demarrerNouvellePartie(partieCreationRequest);
     }
 
-    @PostMapping("/nouvelle")
-    public ResponseEntity<Partie> demarrerNouvellePartie(@RequestParam Long joueur1Id, @RequestParam Long joueur2Id, @RequestParam int nbTours) {
-        Partie partie = partieService.demarrerNouvellePartie(joueur1Id, joueur2Id, nbTours);
-        return ResponseEntity.ok(partie);
-    }
-
-    @PostMapping("/{id}/tour")
-    public ResponseEntity<?> jouerTour(@PathVariable Long id, @RequestParam String choixJoueur1, @RequestParam String choixJoueur2) {
-        Partie partie = partieService.getPartie(id);
-        partieService.jouerTour(partie, choixJoueur1, choixJoueur2);
-        return ResponseEntity.ok("Tour joué");
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Partie> getPartie(@PathVariable Long id) {
-        Partie partie = partieService.getPartie(id);
-        return ResponseEntity.ok(partie);
-    }
-    @PostMapping("/{partieId}/abandon")
-    public ResponseEntity<?> joueurAbandonne(
-            @PathVariable Long partieId,
-            @RequestParam Long joueurId,
-            @RequestParam String strategieChoisie) {
-
-        Partie partie = partieService.getPartie(partieId);
-        partieService.joueurAbandonne(partie, joueurId, strategieChoisie);
-        return ResponseEntity.ok("Le joueur a abandonné et la stratégie " + strategieChoisie + " est appliquée.");
+    @Override
+    public PartieResponseDTO updatePartie(Long idPartie, PartieJoinRequest partieJoinRequest) {
+        return partieService.rejoindrePartie(idPartie, partieJoinRequest);
     }
 }
 

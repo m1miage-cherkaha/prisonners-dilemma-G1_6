@@ -1,14 +1,20 @@
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
+import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Strategie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.strategies.*;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
 import org.springframework.stereotype.Service;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
 
 import java.util.Optional;
+
+import static fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie.*;
 
 @Service
 public class PartieService {
@@ -20,40 +26,69 @@ public class PartieService {
         this.partieRepository = partieRepository;
     }
 
-    public Partie demarrerNouvellePartie(Long joueur1Id, Long joueur2Id, int nbTours) {
-        Optional<Joueur> joueur1 = joueurRepository.findById(joueur1Id);
-        Optional<Joueur> joueur2 = joueurRepository.findById(joueur2Id);
+//    public Partie demarrerNouvellePartie(Long joueur1Id, Long joueur2Id, int nbTours) {
+//        Optional<Joueur> joueur1 = joueurRepository.findById(joueur1Id);
+//        Optional<Joueur> joueur2 = joueurRepository.findById(joueur2Id);
+//
+//        if (joueur1.isPresent() && joueur2.isPresent()) {
+//            Partie nouvellePartie = new Partie(joueur1.get(), joueur2.get(), nbTours);
+//            return partieRepository.save(nouvellePartie);
+//        } else {
+//            throw new IllegalArgumentException("Joueurs non trouvés");
+//        }
+//    }
 
-        if (joueur1.isPresent() && joueur2.isPresent()) {
-            Partie nouvellePartie = new Partie(joueur1.get(), joueur2.get(), nbTours);
-            return partieRepository.save(nouvellePartie);
-        } else {
-            throw new IllegalArgumentException("Joueurs non trouvés");
-        }
+    public PartieResponseDTO demarrerNouvellePartie(PartieCreationRequest partieCreationRequest){
+        Joueur joueur1 = new Joueur(partieCreationRequest.getNomJoueur1());
+        joueurRepository.save(joueur1);
+
+        Strategie strategieJoueur1 = choisirStrategie(partieCreationRequest.getStrategieJoueur1());
+
+        Partie nouvellePartie = new Partie(joueur1,null,partieCreationRequest.getNbTours());
+        nouvellePartie.setStrategieJoueur1(strategieJoueur1);
+
+        Partie savedPartie = partieRepository.save(nouvellePartie);
+
+        return new PartieResponseDTO(savedPartie);
+
     }
+    public PartieResponseDTO rejoindrePartie(Long id, PartieJoinRequest partieJoinRequest){
+        Partie partie = partieRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Partie non trouvée"));
 
-    public void joueurAbandonne(Partie partie, Long joueurId, String strategieChoisie) {
-        Strategie strategieServeur = choisirStrategie(strategieChoisie);
+        Joueur joueur2 =  new Joueur(partieJoinRequest.getNomJoueur2());
+        joueurRepository.save(joueur2);
+        Strategie strategieJoueur2 = choisirStrategie(partieJoinRequest.getStrategieJoueur2());
 
-        // Si c'est joueur1 qui abandonne
-        if (partie.getJoueur1().getId().equals(joueurId)) {
-            partie.setStrategieJoueur1(strategieServeur);
-        } else {
-            // Si c'est joueur2 qui abandonne
-            partie.setStrategieJoueur2(strategieServeur);
-        }
+        partie.setStrategieJoueur2(strategieJoueur2);
+        partie.setJoueur2(joueur2);
+
+        partieRepository.save(partie);
+
+        return null;
     }
-    private Strategie choisirStrategie(String strategieChoisie) {
-        switch (strategieChoisie.toLowerCase()) {
-            case "toujours_cooperer":
+//    public void joueurAbandonne(Partie partie, Long joueurId, String strategieChoisie) {
+//        Strategie strategieServeur = choisirStrategie(strategieChoisie);
+//
+//        // Si c'est joueur1 qui abandonne
+//        if (partie.getJoueur1().getId().equals(joueurId)) {
+//            partie.setStrategieJoueur1(strategieServeur);
+//        } else {
+//            // Si c'est joueur2 qui abandonne
+//            partie.setStrategieJoueur2(strategieServeur);
+//        }
+//    }
+    private Strategie choisirStrategie(TypeStrategie strategieChoisie) {
+        switch (strategieChoisie) {
+            case TOUJOURS_COOPERER:
                 return new CoopererStrategie();
-            case "toujours_trahir":
+            case TOUJOURS_TRAHIR:
                 return new TrahirStrategie();
-            case "donnant_donnant":
+            case DONNANT_DONNANT:
                 return new DonnantDonnantStrategie();
-            case "rancunier":
+            case RANCUNIER:
                 return new RancunierStrategie();
-            case "aleatoire":
+            case ALEATOIRE:
                 return new AleatoireStrategie();
             default:
                 throw new IllegalArgumentException("Stratégie non reconnue : " + strategieChoisie);

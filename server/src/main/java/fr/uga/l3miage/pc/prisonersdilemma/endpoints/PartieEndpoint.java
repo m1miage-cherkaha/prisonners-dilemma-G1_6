@@ -14,6 +14,4 @@ public interface PartieEndpoint {
 
     @PatchMapping("/update/{idPartie}")
     PartieResponseDTO updatePartie(@PathVariable Long idPartie, @RequestBody PartieJoinRequest partieJoinRequest);
-    
-
 }

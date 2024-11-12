@@ -22,4 +22,8 @@ public class Joueur {
     public void ajouterPoints(int points) {
         this.score += points;
     }
+
+    public Joueur(String nom){
+        this.nom = nom;
+    }
 }
