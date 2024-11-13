@@ -16,14 +16,12 @@ public class PartieResponseDTO {
     private Long id;
     private Long joueur1Id;
     private Long joueur2Id;
-    private int nbTours;
-    private int scoreJoueur1;
-    private int scoreJoueur2;
-    private Strategie strategieJoueur1;
-    private Strategie strategieJoueur2;
+
 
     public PartieResponseDTO(Partie partie){
+        this.id = partie.getId();
         this.joueur1Id =  partie.getJoueur1().getId();
-        this.nbTours = partie.getNbTours();
+        this.joueur2Id = partie.getJoueur2().getId();
+
     }
 }
