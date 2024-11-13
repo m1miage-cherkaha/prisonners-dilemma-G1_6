@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TourService {
 
+
  private final TourRepository tourRepository;
 
  @Autowired
@@ -35,7 +36,7 @@ public class TourService {
   // Sauvegarder le nouveau tour dans la base de données
   return tourRepository.save(tour);
  }
- public void calculerPoints(Tour tour, Decision decisionJoueur1, Decision decisionJoueur2) {
+ public Tour calculerPoints(Tour tour, Decision decisionJoueur1, Decision decisionJoueur2) {
   // Valeurs Des gains selon l'énoncé
   int t = 5;  // Gain pour celui qui trahit quanD l'autre coopère
   int d = 0;  // Gain pour celui qui coopère et se fait trahir
@@ -62,10 +63,11 @@ public class TourService {
    tour.setPointJoueur1(p);
    tour.setPointJoueur2(p);
   }
-  tourRepository.save(tour);
+  return tour;
  }
 
-// public int jouer(Decision decisionJoueur1, Decision decisionJoueur2, Tour tour) {
+// public Tour jouerTour(Long id, Decision decisionJoueur1, Decision decisionJoueur2, Tour tour) {
+//  partie
 //  tour.setDecisionJoueur1(decisionJoueur1);
 //  tour.setDecisionJoueur2(decisionJoueur2);
 //

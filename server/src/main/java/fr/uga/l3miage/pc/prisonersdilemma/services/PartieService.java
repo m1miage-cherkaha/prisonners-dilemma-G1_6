@@ -3,12 +3,16 @@ package fr.uga.l3miage.pc.prisonersdilemma.services;
 import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Strategie;
+import fr.uga.l3miage.pc.prisonersdilemma.models.Tour;
 import fr.uga.l3miage.pc.prisonersdilemma.models.strategies.*;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.repositories.TourRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.TourRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.TourResponseDTO;
 import org.springframework.stereotype.Service;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
 
@@ -20,10 +24,16 @@ import static fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie.*;
 public class PartieService {
     private final JoueurRepository joueurRepository;
     private final PartieRepository partieRepository;
+    private final TourRepository tourRepository;
 
-    public PartieService(JoueurRepository joueurRepository, PartieRepository partieRepository) {
+    private final TourService tourService;
+
+    public PartieService(JoueurRepository joueurRepository, PartieRepository partieRepository, TourRepository tourRepository, TourService tourService) {
         this.joueurRepository = joueurRepository;
         this.partieRepository = partieRepository;
+        this.tourRepository = tourRepository;
+        this.tourService = tourService;
+
     }
 
 //    public Partie demarrerNouvellePartie(Long joueur1Id, Long joueur2Id, int nbTours) {
@@ -94,29 +104,55 @@ public class PartieService {
                 throw new IllegalArgumentException("Stratégie non reconnue : " + strategieChoisie);
         }
     }
-    public void jouerTour(Partie partie, String choixJoueur1, String choixJoueur2) {
-        partie.getJoueur1().setChoix(choixJoueur1);
-        partie.getJoueur2().setChoix(choixJoueur2);
 
-        // Calcul du score
-        if (choixJoueur1.equals("c") && choixJoueur2.equals("c")) {
-            partie.getJoueur1().ajouterPoints(3);
-            partie.getJoueur2().ajouterPoints(3);
-        } else if (choixJoueur1.equals("t") && choixJoueur2.equals("t")) {
-            partie.getJoueur1().ajouterPoints(1);
-            partie.getJoueur2().ajouterPoints(1);
-        } else if (choixJoueur1.equals("t") && choixJoueur2.equals("c")) {
-            partie.getJoueur1().ajouterPoints(5);
-            partie.getJoueur2().ajouterPoints(0);
-        } else if (choixJoueur1.equals("c") && choixJoueur2.equals("t")) {
-            partie.getJoueur1().ajouterPoints(0);
-            partie.getJoueur2().ajouterPoints(5);
-        }
+    public TourResponseDTO jouerTour(Partie partie , TourRequest tourRequest){
+        // vérifier si le nombre de tours a été atteint
+        //ICI
 
-        // Mettre à jour les joueurs dans la base de données
-        joueurRepository.save(partie.getJoueur1());
-        joueurRepository.save(partie.getJoueur2());
+        // Appeler TourService pour initialiser un nouveau tour
+        Tour tour = tourService.demarrerNouveauTour(partie);
+
+        // Appliquer les décisions des joueurs et calculer les points
+        tour = tourService.calculerPoints(tour, tourRequest.getDecisionJoueur1(), tourRequest.getDecisionJoueur2());
+
+        // Mettre à jour les scores de la partie
+        partie.setScoreJoueur1(partie.getScoreJoueur1() + tour.getPointJoueur1());
+        partie.setScoreJoueur2(partie.getScoreJoueur2() + tour.getPointJoueur2());
+
+        // Ajouter le tour à la partie
+        partie.getTours().add(tour);
+
+        // Sauvegarder le tour et la partie
+        tourRepository.save(tour);
+        partieRepository.save(partie);
+
+        return new TourResponseDTO(tour);
+
+
     }
+//    public void jouerTour(Partie partie, String choixJoueur1, String choixJoueur2) {
+//        partie.getJoueur1().setChoix(choixJoueur1);
+//        partie.getJoueur2().setChoix(choixJoueur2);
+//
+//        // Calcul du score
+//        if (choixJoueur1.equals("c") && choixJoueur2.equals("c")) {
+//            partie.getJoueur1().ajouterPoints(3);
+//            partie.getJoueur2().ajouterPoints(3);
+//        } else if (choixJoueur1.equals("t") && choixJoueur2.equals("t")) {
+//            partie.getJoueur1().ajouterPoints(1);
+//            partie.getJoueur2().ajouterPoints(1);
+//        } else if (choixJoueur1.equals("t") && choixJoueur2.equals("c")) {
+//            partie.getJoueur1().ajouterPoints(5);
+//            partie.getJoueur2().ajouterPoints(0);
+//        } else if (choixJoueur1.equals("c") && choixJoueur2.equals("t")) {
+//            partie.getJoueur1().ajouterPoints(0);
+//            partie.getJoueur2().ajouterPoints(5);
+//        }
+//
+//        // Mettre à jour les joueurs dans la base de données
+//        joueurRepository.save(partie.getJoueur1());
+//        joueurRepository.save(partie.getJoueur2());
+//    }
 
     public Partie getPartie(Long partieId) {
         return partieRepository.findById(partieId).orElseThrow(() -> new IllegalArgumentException("Partie non trouvée"));
