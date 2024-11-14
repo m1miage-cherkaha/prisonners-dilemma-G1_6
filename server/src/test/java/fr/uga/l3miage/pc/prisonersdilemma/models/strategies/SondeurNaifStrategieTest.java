@@ -1,0 +1,43 @@
+
+package fr.uga.l3miage.pc.prisonersdilemma.models.strategies;
+
+import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
+
+public class SondeurNaifStrategieTest {
+
+    private SondeurNaifStrategie strategie;
+
+    @BeforeEach
+    public void setUp() {
+        strategie = new SondeurNaifStrategie();
+    }
+
+    @Test
+    public void testFaireChoix_Trahir() {
+        List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.COOPERER);
+        Decision decision = strategie.faireChoix(coupsAdversaire);
+        assertTrue(decision == Decision.TRAHIR || decision == Decision.COOPERER);
+    }
+
+    @Test
+    public void testFaireChoix_SuivreDernierCoup() {
+        List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR);
+        Decision decision = strategie.faireChoix(coupsAdversaire);
+        assertEquals(Decision.TRAHIR, decision);
+    }
+
+    @Test
+    public void testFaireChoix_SuivreDernierCoup_Cooperer() {
+        List<Decision> coupsAdversaire = Arrays.asList(Decision.TRAHIR, Decision.COOPERER);
+        Decision decision = strategie.faireChoix(coupsAdversaire);
+        assertEquals(Decision.COOPERER, decision);
+    }
+}
