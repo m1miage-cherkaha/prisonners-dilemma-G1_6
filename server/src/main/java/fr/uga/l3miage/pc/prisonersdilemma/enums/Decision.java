@@ -4,7 +4,7 @@ public enum Decision {
     TRAHIR,
     COOPERER;
 
-    static public Decision fromString(String decision) {
+    public static Decision fromString(String decision) {
         if (decision.equals("TRAHIR")) {
             return TRAHIR;
         } else {

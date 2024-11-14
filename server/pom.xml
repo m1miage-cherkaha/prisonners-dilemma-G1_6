@@ -12,7 +12,9 @@
         <artifactId>my_project_g1_6</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
+    <properties>
+        <sonar.host.url>http://im2ag-sonar.u-ga.fr:9000</sonar.host.url>
+    </properties>
     <dependencies>
         <dependency>
             <artifactId>rest-api</artifactId>
@@ -169,6 +171,32 @@
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate-code-coverage-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

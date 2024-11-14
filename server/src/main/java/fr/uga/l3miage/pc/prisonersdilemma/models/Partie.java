@@ -22,17 +22,12 @@ public class Partie{
     private Joueur joueur1;
     @ManyToOne
     private Joueur joueur2;
-
-    private int scoreJoueur1;
-    private int scoreJoueur2;
-    @Transient //=> champs temporaires non enregistrés en base
-    private Strategie strategieJoueur1;
-    @Transient
-    private Strategie strategieJoueur2;
     private int nbTours;
     @OneToMany
     private List<Tour> Tours;
      public Partie(Joueur joueur1, Joueur joueur2, int nbTours){
-
+        this.joueur1 = joueur1;
+        this.joueur2 = joueur2;
+        this.nbTours = nbTours;
      }
 }

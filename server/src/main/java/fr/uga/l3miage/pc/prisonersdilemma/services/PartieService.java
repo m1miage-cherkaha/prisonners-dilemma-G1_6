@@ -41,30 +41,18 @@ public class PartieService {
 
     }
 
-//    public Partie demarrerNouvellePartie(Long joueur1Id, Long joueur2Id, int nbTours) {
-//        Optional<Joueur> joueur1 = joueurRepository.findById(joueur1Id);
-//        Optional<Joueur> joueur2 = joueurRepository.findById(joueur2Id);
-//
-//        if (joueur1.isPresent() && joueur2.isPresent()) {
-//            Partie nouvellePartie = new Partie(joueur1.get(), joueur2.get(), nbTours);
-//            return partieRepository.save(nouvellePartie);
-//        } else {
-//            throw new IllegalArgumentException("Joueurs non trouvés");
-//        }
-//    }
-
     public PartieResponseDTO demarrerNouvellePartie(PartieCreationRequest partieCreationRequest){
         Joueur joueur1 = new Joueur(partieCreationRequest.getNomJoueur1());
         joueurRepository.save(joueur1);
 
         TypeStrategie strategieJoueur1 = choisirStrategie(partieCreationRequest.getStrategieJoueur1());
 
-        Partie nouvellePartie = new Partie(joueur1,null,partieCreationRequest.getNbTours());
+        Partie nouvellePartie = new Partie(joueur1,new Joueur("unknown"),partieCreationRequest.getNbTours());
         nouvellePartie.getJoueur1().setStrategie(strategieJoueur1);
 
-        Partie savedPartie = partieRepository.save(nouvellePartie);
+        partieRepository.save(nouvellePartie);
 
-        return PartieMapper.toPartieResponseDTO(savedPartie);
+        return PartieMapper.toPartieResponseDTO(nouvellePartie);
 
     }
     public PartieResponseDTO rejoindrePartie(Long id, PartieJoinRequest partieJoinRequest){
@@ -72,13 +60,13 @@ public class PartieService {
                 .orElseThrow(() -> new IllegalArgumentException("Partie non trouvée"));
 
         Joueur joueur2 =  new Joueur(partieJoinRequest.getNomJoueur2());
-        joueurRepository.save(joueur2);
         TypeStrategie strategieJoueur2 = choisirStrategie(partieJoinRequest.getStrategieJoueur2());
 
         partie.getJoueur2().setStrategie(strategieJoueur2);
         partie.setJoueur2(joueur2);
 
         partieRepository.save(partie);
+        joueurRepository.save(joueur2);
 
         return PartieMapper.toPartieResponseDTO(partie);
     }
@@ -107,11 +95,11 @@ public class PartieService {
         Tour tour = tourService.demarrerNouveauTour(partie);
 
         // Appliquer les décisions des joueurs et calculer les points
-        tour = tourService.calculerPoints(tour, Decision.fromString(tourRequest.getDecisionJoueur1()),Decision.fromString(tourRequest.getDecisionJoueur2().toString()));
+        tour = tourService.calculerPoints(tour, Decision.fromString(tourRequest.getDecisionJoueur1()),Decision.fromString(tourRequest.getDecisionJoueur2()));
 
         // Mettre à jour les scores de la partie
-        partie.setScoreJoueur1(partie.getScoreJoueur1() + tour.getPointJoueur1());
-        partie.setScoreJoueur2(partie.getScoreJoueur2() + tour.getPointJoueur2());
+        partie.getJoueur1().ajouterPoints(tour.getPointJoueur1());
+        partie.getJoueur2().ajouterPoints(tour.getPointJoueur2());
 
         // Ajouter le tour à la partie
         partie.getTours().add(tour);

@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonnersdilemma.controllers;
+package fr.uga.l3miage.pc.prisonersdilemma.controllers;
 import fr.uga.l3miage.pc.prisonersdilemma.controllers.PartieController;
 import fr.uga.l3miage.pc.prisonersdilemma.services.PartieService;
 import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieCreationRequest;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 
 
-public class PartieControllerTest {
+class PartieControllerTest {
 
     @Mock
     private PartieService partieService;
@@ -29,19 +29,22 @@ public class PartieControllerTest {
     }
 
     @Test
-    public void testCreatePartie() {
+    void testCreatePartie() {
+        //Given
         PartieCreationRequest request = new PartieCreationRequest(null, 0, null);
         PartieResponseDTO response = new PartieResponseDTO();
-        
-        when(partieService.demarrerNouvellePartie(any(PartieCreationRequest.class))).thenReturn(response);
 
+        //when
+        when(partieService.demarrerNouvellePartie(any(PartieCreationRequest.class))).thenReturn(response);
+        
+        //then
         PartieResponseDTO result = partieController.createPartie(request);
 
         assertEquals(response, result);
     }
 
     @Test
-    public void testUpdatePartie() {
+    void testUpdatePartie() {
         Long idPartie = 1L;
         PartieJoinRequest request = new PartieJoinRequest(null, null);
         PartieResponseDTO response = new PartieResponseDTO();

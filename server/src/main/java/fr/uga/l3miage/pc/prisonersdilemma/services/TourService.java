@@ -66,14 +66,6 @@ public class TourService {
   return tour;
  }
 
-// public Tour jouerTour(Long id, Decision decisionJoueur1, Decision decisionJoueur2, Tour tour) {
-//  partie
-//  tour.setDecisionJoueur1(decisionJoueur1);
-//  tour.setDecisionJoueur2(decisionJoueur2);
-//
-//  return calculerPoints(decisionJoueur1, decisionJoueur2, tour);
-// }
-
 
 
 

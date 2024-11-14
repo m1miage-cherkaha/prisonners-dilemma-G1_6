@@ -15,12 +15,4 @@ public class TourResponseDTO {
     private int pointJoueur2;
     private String decisionJoueur1;
     private String decisionJoueur2;
-
-    /*public TourResponseDTO(Tour tour) {
-        this.id = tour.getId();
-        this.pointJoueur1 = tour.getPointJoueur1();
-        this.pointJoueur2 = tour.getPointJoueur2();
-        this.decisionJoueur1 = tour.getDecisionJoueur1().toString();
-        this.decisionJoueur2 = tour.getDecisionJoueur2().toString();
-    }*/
 }

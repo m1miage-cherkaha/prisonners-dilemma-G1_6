@@ -13,12 +13,4 @@ public class PartieResponseDTO {
     private Long id;
     private Long joueur1Id;
     private Long joueur2Id;
-
-
-   /* public PartieResponseDTO(Partie partie){
-        this.id = partie.getId();
-        this.joueur1Id =  partie.getJoueur1().getId();
-        this.joueur2Id = partie.getJoueur2().getId();
-
-    }*/
 }
