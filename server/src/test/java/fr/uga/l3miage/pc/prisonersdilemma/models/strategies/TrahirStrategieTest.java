@@ -8,10 +8,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class TrahirStrategieTest {
+class TrahirStrategieTest {
 
     @Test
-    public void testFaireChoix() {
+    void testFaireChoix() {
         TrahirStrategie trahirStrategie = new TrahirStrategie();
         List<Decision> coupsAdversaire = Collections.emptyList(); // The input doesn't matter for this strategy
 

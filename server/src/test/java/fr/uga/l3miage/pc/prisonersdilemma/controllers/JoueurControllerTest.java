@@ -25,12 +25,12 @@ class JoueurControllerTest {
     private JoueurController joueurController;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testGetAllJoueurs() {
+    void testGetAllJoueurs() {
         List<Joueur> joueurs = Arrays.asList(new Joueur(), new Joueur());
         when(joueurService.getAllJoueurs()).thenReturn(joueurs);
 

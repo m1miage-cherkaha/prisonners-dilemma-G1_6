@@ -9,31 +9,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
-public class RancunierStrategieTest {
+class RancunierStrategieTest {
 
     @Test
-    public void testFaireChoix_AllCooperate() {
+    void testFaireChoix_AllCooperate() {
         RancunierStrategie strategie = new RancunierStrategie();
         Decision result = strategie.faireChoix(Collections.nCopies(5, Decision.COOPERER));
         assertEquals(Decision.COOPERER, result);
     }
 
     @Test
-    public void testFaireChoix_OneBetray() {
+    void testFaireChoix_OneBetray() {
         RancunierStrategie strategie = new RancunierStrategie();
         Decision result = strategie.faireChoix(Arrays.asList(Decision.COOPERER, Decision.COOPERER, Decision.TRAHIR, Decision.COOPERER));
         assertEquals(Decision.TRAHIR, result);
     }
 
     @Test
-    public void testFaireChoix_AllBetray() {
+    void testFaireChoix_AllBetray() {
         RancunierStrategie strategie = new RancunierStrategie();
         Decision result = strategie.faireChoix(Collections.nCopies(5, Decision.TRAHIR));
         assertEquals(Decision.TRAHIR, result);
     }
 
     @Test
-    public void testFaireChoix_EmptyList() {
+    void testFaireChoix_EmptyList() {
         RancunierStrategie strategie = new RancunierStrategie();
         Decision result = strategie.faireChoix(Collections.emptyList());
         assertEquals(Decision.COOPERER, result);

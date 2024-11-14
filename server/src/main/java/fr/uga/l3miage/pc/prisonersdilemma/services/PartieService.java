@@ -87,12 +87,12 @@ public class PartieService {
         }
     }
 
-    public TourResponseDTO jouerTour(Partie partie , TourRequest tourRequest){
+    public TourResponseDTO jouerTour(TourRequest tourRequest){
         // vérifier si le nombre de tours a été atteint
-        //ICI
+        Partie partie = partieRepository.findById(tourRequest.getIdPartie())
+                .orElseThrow(() -> new IllegalArgumentException("Partie non trouvée"));
 
-        // Appeler TourService pour initialiser un nouveau tour
-        Tour tour = tourService.demarrerNouveauTour(partie);
+        Tour tour = new Tour();
 
         // Appliquer les décisions des joueurs et calculer les points
         tour = tourService.calculerPoints(tour, Decision.fromString(tourRequest.getDecisionJoueur1()),Decision.fromString(tourRequest.getDecisionJoueur2()));
@@ -109,7 +109,5 @@ public class PartieService {
         partieRepository.save(partie);
 
         return TourMapper.toTourResponseDTO(tour);
-
-
     }
 }

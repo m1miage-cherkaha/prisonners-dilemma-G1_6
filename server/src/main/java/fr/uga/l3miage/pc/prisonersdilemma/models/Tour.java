@@ -1,5 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
+import org.springframework.data.repository.query.parser.Part;
+
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
 
@@ -23,14 +25,5 @@ public class Tour {
     private Decision decisionJoueur1;
     private Decision decisionJoueur2;
 
-    @ManyToOne
-    private Partie partie;
-
-
-
-
-
-
-
-
+    Partie partie;
 }

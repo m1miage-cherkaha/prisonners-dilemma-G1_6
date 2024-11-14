@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class AdaptatifTest {
+class AdaptatifTest {
 
     private Adaptatif adaptatif;
 
@@ -18,7 +18,7 @@ public class AdaptatifTest {
     }
 
     @Test
-    public void testInitialMoves() {
+    void testInitialMoves() {
         for (int i = 0; i < 6; i++) {
             assertEquals(Decision.COOPERER, adaptatif.faireChoix(List.of()));
         }
@@ -28,7 +28,7 @@ public class AdaptatifTest {
     }
 
     @Test
-    public void testUpdateScoreAndFaireChoix() {
+    void testUpdateScoreAndFaireChoix() {
         // Simulate some decisions and scores
         adaptatif.updateScore(3, Decision.COOPERER);
         adaptatif.updateScore(5, Decision.TRAHIR);
@@ -45,7 +45,7 @@ public class AdaptatifTest {
     }
 
     @Test
-    public void testFaireChoixAfterInitialMoves() {
+    void testFaireChoixAfterInitialMoves() {
         // Skip initial moves
         for (int i = 0; i < 11; i++) {
             adaptatif.faireChoix(List.of());

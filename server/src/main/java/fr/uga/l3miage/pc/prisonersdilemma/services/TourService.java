@@ -16,12 +16,12 @@ public class TourService {
  private final TourRepository tourRepository;
 
  @Autowired
- public TourService(TourRepository tourRepository){
+public TourService(TourRepository tourRepository){
   this.tourRepository = tourRepository;
 
  }
 
- public Tour demarrerNouveauTour(Partie partie) {
+public Tour demarrerNouveauTour(Partie partie) {
   Tour tour = new Tour();
 
   // Réinitialiser les points des joueurs et les décisions
@@ -30,13 +30,11 @@ public class TourService {
   tour.setDecisionJoueur1(null);
   tour.setDecisionJoueur2(null);
 
-  // Associer le tour à la partie
-  tour.setPartie(partie);
 
   // Sauvegarder le nouveau tour dans la base de données
   return tourRepository.save(tour);
  }
- public Tour calculerPoints(Tour tour, Decision decisionJoueur1, Decision decisionJoueur2) {
+public Tour calculerPoints(Tour tour, Decision decisionJoueur1, Decision decisionJoueur2) {
   // Valeurs Des gains selon l'énoncé
   int t = 5;  // Gain pour celui qui trahit quanD l'autre coopère
   int d = 0;  // Gain pour celui qui coopère et se fait trahir

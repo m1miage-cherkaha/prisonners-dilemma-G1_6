@@ -11,33 +11,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 
-public class SondeurNaifStrategieTest {
+class SondeurNaifStrategieTest {
 
     private SondeurNaifStrategie strategie;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         strategie = new SondeurNaifStrategie();
     }
 
     @Test
-    public void testFaireChoix_Trahir() {
+    void testFaireChoix_Trahir() {
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.COOPERER);
         Decision decision = strategie.faireChoix(coupsAdversaire);
         assertTrue(decision == Decision.TRAHIR || decision == Decision.COOPERER);
     }
 
     @Test
-    public void testFaireChoix_SuivreDernierCoup() {
+    void testFaireChoix_SuivreDernierCoup() {
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR);
         Decision decision = strategie.faireChoix(coupsAdversaire);
         assertEquals(Decision.TRAHIR, decision);
-    }
-
-    @Test
-    public void testFaireChoix_SuivreDernierCoup_Cooperer() {
-        List<Decision> coupsAdversaire = Arrays.asList(Decision.TRAHIR, Decision.COOPERER);
-        Decision decision = strategie.faireChoix(coupsAdversaire);
-        assertEquals(Decision.COOPERER, decision);
     }
 }

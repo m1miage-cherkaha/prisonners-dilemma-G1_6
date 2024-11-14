@@ -10,24 +10,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class DonnantDonnantAleatoireStrategieTest {
+class DonnantDonnantAleatoireStrategieTest {
 
     private DonnantDonnantAleatoireStrategie strategie;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         strategie = new DonnantDonnantAleatoireStrategie();
     }
 
     @Test
-    public void testFaireChoixReturnsLastDecision() {
+    void testFaireChoixReturnsLastDecision() {
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR, Decision.COOPERER);
         Decision decision = strategie.faireChoix(coupsAdversaire);
         assertEquals(Decision.COOPERER, decision);
     }
 
     @Test
-    public void testFaireChoixReturnsRandomDecision() {
+    void testFaireChoixReturnsRandomDecision() {
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR, Decision.COOPERER);
         boolean randomDecisionOccurred = false;
         for (int i = 0; i < 100; i++) {

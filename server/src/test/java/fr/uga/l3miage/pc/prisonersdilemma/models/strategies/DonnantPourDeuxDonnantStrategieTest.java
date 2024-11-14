@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
-public class DonnantPourDeuxDonnantStrategieTest {
+class DonnantPourDeuxDonnantStrategieTest {
 
     @Test
-    public void testFaireChoixWithTwoSameDecisions() {
+    void testFaireChoixWithTwoSameDecisions() {
         DonnantPourDeuxDonnantStrategie strategie = new DonnantPourDeuxDonnantStrategie();
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.COOPERER);
         Decision result = strategie.faireChoix(coupsAdversaire);
@@ -20,7 +20,7 @@ public class DonnantPourDeuxDonnantStrategieTest {
     }
 
     @Test
-    public void testFaireChoixWithTwoDifferentDecisions() {
+    void testFaireChoixWithTwoDifferentDecisions() {
         DonnantPourDeuxDonnantStrategie strategie = new DonnantPourDeuxDonnantStrategie();
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR);
         Decision result = strategie.faireChoix(coupsAdversaire);
@@ -28,7 +28,7 @@ public class DonnantPourDeuxDonnantStrategieTest {
     }
 
     @Test
-    public void testFaireChoixWithLessThanTwoDecisions() {
+    void testFaireChoixWithLessThanTwoDecisions() {
         DonnantPourDeuxDonnantStrategie strategie = new DonnantPourDeuxDonnantStrategie();
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER);
         Decision result = strategie.faireChoix(coupsAdversaire);
@@ -36,7 +36,7 @@ public class DonnantPourDeuxDonnantStrategieTest {
     }
 
     @Test
-    public void testFaireChoixWithEmptyList() {
+    void testFaireChoixWithEmptyList() {
         DonnantPourDeuxDonnantStrategie strategie = new DonnantPourDeuxDonnantStrategie();
         List<Decision> coupsAdversaire = Arrays.asList();
         Decision result = strategie.faireChoix(coupsAdversaire);

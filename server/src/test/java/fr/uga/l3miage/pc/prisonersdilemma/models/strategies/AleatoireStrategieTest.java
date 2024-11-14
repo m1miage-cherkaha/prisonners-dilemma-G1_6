@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 
-public class AleatoireStrategieTest {
+class AleatoireStrategieTest {
 
     @Test
-    public void testFaireChoix() {
+    void testFaireChoix() {
         AleatoireStrategie strategie = new AleatoireStrategie();
         List<Decision> coupsAdversaire = new ArrayList<>();
 
