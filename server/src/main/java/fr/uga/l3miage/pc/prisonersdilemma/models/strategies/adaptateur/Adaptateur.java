@@ -9,15 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Strategie;
 
 public class Adaptateur implements Strategie {
-    // Decision.cooperer =>true, Decision.trahir => false
-    //A adapter : Décision => type PartieJouee = {boolean choixJoueur, boolean choixAutreJoueur, private int resultat}
     private BaseStrategie strategie;
 
-    public Adaptateur(StrategieFactory strategieFactory, int idStrategie) {
-        this.strategie = strategieFactory.createStrategie(idStrategie);
+    public Adaptateur(TypeStrategie typeStrategie) {
+        switch (typeStrategie) {
+            case TOUJOURS_COOPERER:
+                this.strategie = StrategieFactory.createStrategie(16);
+            break;
+            case TOUJOURS_TRAHIR :
+                this.strategie = StrategieFactory.createStrategie(17);
+            break;
+            default:
+                System.out.println("Strategie non reconnue, statégie par défaut : toujours coopérer");
+                this.strategie = StrategieFactory.createStrategie(16);
+                break;
+        }
     }
 
 
