@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import javassist.expr.Instanceof;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -3,8 +3,9 @@ package fr.uga.l3miage.pc.prisonersdilemma.models;
 
 import java.lang.reflect.Type;
 
+import javax.persistence.*;
+
 import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class Joueur {
     private String nom;
     private int score; // pas sur qu'on garde ça
     private TypeStrategie strategie;
-
+    
     public void ajouterPoints(int points) {
         this.score += points;
     }
@@ -29,4 +30,5 @@ public class Joueur {
     public Joueur(String nom){
         this.nom = nom;
     }
+
 }

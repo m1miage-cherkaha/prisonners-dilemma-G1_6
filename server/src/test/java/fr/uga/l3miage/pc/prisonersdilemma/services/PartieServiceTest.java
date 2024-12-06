@@ -7,14 +7,15 @@ import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.TourRepository;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieCreationRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieJoinRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import java.util.Optional;
 
 import static fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie.fromString;
@@ -44,7 +45,7 @@ class PartieServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test

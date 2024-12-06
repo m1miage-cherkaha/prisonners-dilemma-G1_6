@@ -2,10 +2,11 @@ package fr.uga.l3miage.pc.prisonersdilemma.controllers;
 
 
 import fr.uga.l3miage.pc.prisonersdilemma.services.PartieService;
-import fr.uga.l3miage.pc.prisonnersdilemma.endpoints.PartieEndpoint;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieCreationRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieJoinRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.endpoints.PartieEndpoint;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.ScoreResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,11 @@ public class PartieController implements PartieEndpoint {
     @Override
     public PartieResponseDTO updatePartie(Long idPartie, PartieJoinRequest partieJoinRequest) {
         return partieService.rejoindrePartie(idPartie, partieJoinRequest);
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
     }
 }
 

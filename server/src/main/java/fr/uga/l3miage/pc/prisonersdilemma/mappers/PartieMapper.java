@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.mappers;
 
 import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
 
 public class PartieMapper {
     private PartieMapper() {

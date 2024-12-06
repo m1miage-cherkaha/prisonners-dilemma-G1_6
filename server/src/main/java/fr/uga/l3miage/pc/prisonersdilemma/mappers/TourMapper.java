@@ -1,7 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.mappers;
 
 import fr.uga.l3miage.pc.prisonersdilemma.models.Tour;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.TourResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.TourResponseDTO;
 
 public class TourMapper {
     private TourMapper() {

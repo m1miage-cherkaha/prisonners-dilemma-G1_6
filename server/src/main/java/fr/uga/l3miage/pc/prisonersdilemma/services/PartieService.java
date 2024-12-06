@@ -11,11 +11,11 @@ import fr.uga.l3miage.pc.prisonersdilemma.models.strategies.*;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.TourRepository;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieCreationRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieJoinRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.TourRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.PartieResponseDTO;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.TourResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.TourRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.TourResponseDTO;
 
 import org.springframework.stereotype.Service;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
