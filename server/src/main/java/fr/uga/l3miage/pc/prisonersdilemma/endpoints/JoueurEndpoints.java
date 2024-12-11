@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.uga.l3miage.pc.prisonersdilemma.requests.LeaveRequestDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.JoueurReponseDTO;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/joueurs")
