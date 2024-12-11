@@ -2,7 +2,7 @@ package fr.uga.l3miage.pc.prisonersdilemma.models;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

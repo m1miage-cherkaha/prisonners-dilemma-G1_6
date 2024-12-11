@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
 import lombok.AllArgsConstructor;
