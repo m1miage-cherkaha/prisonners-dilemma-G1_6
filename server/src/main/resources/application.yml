@@ -1,13 +1,13 @@
 
 server:
-  port: 5050
+  port: ${PORT:8080}  # Default to 8080 if PORT is not set (for local development)
+
 
 spring:
   datasource:
     url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD}
+
 
   jpa:
     hibernate:
