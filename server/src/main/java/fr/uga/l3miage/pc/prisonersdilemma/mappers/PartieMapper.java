@@ -11,6 +11,8 @@ public class PartieMapper {
                 .id(partie.getId())
                 .joueur1Id(partie.getJoueur1().getId())
                 .joueur2Id(partie.getJoueur2().getId())
+                .nbTours(partie.getNbTours())
+                .status(partie.getStatus())
                 .build();
     }
     

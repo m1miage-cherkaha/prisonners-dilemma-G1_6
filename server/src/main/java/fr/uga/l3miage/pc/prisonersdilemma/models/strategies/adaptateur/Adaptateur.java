@@ -1,12 +1,12 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models.strategies.adaptateur;
-
-import fr.uga.l3miage.pc.prisonersdilemma.models.strategies.*;
 import fr.uga.l3miage.pc.prisonersdilemma.classes.PartieJouee;
 import fr.uga.l3miage.pc.prisonersdilemma.classes.StrategieFactory;
 import fr.uga.l3miage.pc.prisonersdilemma.classes.strategies.BaseStrategie;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jboss.logging.Logger;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
@@ -16,6 +16,9 @@ public class Adaptateur implements Strategie {
     private BaseStrategie strategie;
 
     public Adaptateur(TypeStrategie typeStrategie) {
+
+        Logger logger = Logger.getLogger(Adaptateur.class);
+
         switch (typeStrategie) {
             case TOUJOURS_COOPERER:
                 this.strategie = StrategieFactory.createStrategie(16);
@@ -24,7 +27,7 @@ public class Adaptateur implements Strategie {
                 this.strategie = StrategieFactory.createStrategie(17);
             break;
             default:
-                System.out.println("Strategie non reconnue, statégie par défaut : toujours coopérer");
+            logger.error("Strategie non reconnue, statégie par défaut : toujours coopérer");
                 this.strategie = StrategieFactory.createStrategie(16);
                 break;
         }

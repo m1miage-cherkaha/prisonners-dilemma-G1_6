@@ -14,7 +14,7 @@
     </parent>
 
     <properties>
-        <sonar.host.url>https://im2ag-sonar.univ-grenoble-alpes.fr:9000</sonar.host.url>
+        <sonar.host.url>https://im2ag-sonar.univ-grenoble-alpes.fr</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -134,24 +134,12 @@
 
     <build>
 
-        <finalName>pc-project</finalName>
+        <finalName>prisonners-dilemma-G1_6</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
-                <!--<configuration>
-                    <includes>
-                        <include>fr/uga/l3miage/pc/prisonersdilemma/models/strategies/**</include>
-                            <include>fr/uga/l3miage/pc/prisonersdilemma/enums/**</include>
-                            <include>fr/uga/l3miage/pc/prisonersdilemma/models/Strategie.class</include>
-                    </includes>
-                    <archive>
-                        <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
-                    </archive>
-                </configuration>-->
             </plugin>
             <!-- Spring Boot Plugin -->
             <plugin>

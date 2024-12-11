@@ -9,5 +9,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class PartieJoinRequest {
      private String nomJoueur2;
-     private String strategieJoueur2;
 }

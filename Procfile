@@ -1,0 +1,1 @@
+web: java -jar target/prisonners-dilemma-G1_6.jar

@@ -1,15 +1,18 @@
 package fr.uga.l3miage.pc.prisonersdilemma.controllers;
 
+import fr.uga.l3miage.pc.prisonersdilemma.endpoints.JoueurEndpoints;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.LeaveRequestDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.JoueurReponseDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.services.JoueurService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/joueurs")
-public class JoueurController {
+public class JoueurController implements JoueurEndpoints {
 
     private final JoueurService joueurService;
 
@@ -18,20 +21,21 @@ public class JoueurController {
     }
 
     // Récupérer la liste des joueurs
-    @GetMapping("/all")
-    public ResponseEntity<List<Joueur>> getAllJoueurs() {
-        return ResponseEntity.ok(joueurService.getAllJoueurs());
-    }
-
-    // Créer un nouveau joueur
-    @PostMapping("/nouveau")
-    public ResponseEntity<Joueur> createJoueur(@RequestBody Joueur joueur) {
-        return ResponseEntity.ok(joueurService.createJoueur(joueur));
+    public List<JoueurReponseDTO> getAllJoueurs() {
+        List<JoueurReponseDTO> joueurs = new ArrayList<>();
+        for(Joueur joueur : joueurService.getAllJoueurs()){
+            joueurs.add(new JoueurReponseDTO(joueur.getId(), joueur.getNom(), joueur.getScore()));
+        }
+        return joueurs;
     }
 
     // Récupérer un joueur par ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Joueur> getJoueurById(@PathVariable Long id) {
-        return ResponseEntity.ok(joueurService.getJoueurById(id));
+    public JoueurReponseDTO getJoueurById(@PathVariable Long idPlayer) {
+        return new JoueurReponseDTO(joueurService.getJoueurById(idPlayer).getId(), joueurService.getJoueurById(idPlayer).getNom(), joueurService.getJoueurById(idPlayer).getScore());
+    }
+
+    @Override
+    public boolean leaveGame(LeaveRequestDTO body) {
+        return joueurService.leaveGame(body.getId(), body.getStrategy());
     }
 }

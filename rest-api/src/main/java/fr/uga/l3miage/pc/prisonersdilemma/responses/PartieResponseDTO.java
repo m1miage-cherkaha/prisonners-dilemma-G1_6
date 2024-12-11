@@ -13,4 +13,6 @@ public class PartieResponseDTO {
     private Long id;
     private Long joueur1Id;
     private Long joueur2Id;
+    private int nbTours;
+    private String status;
 }

@@ -10,5 +10,4 @@ import lombok.Data;
 public class PartieCreationRequest {
     private String nomJoueur1;
     private int nbTours;
-    private String strategieJoueur1;
 }

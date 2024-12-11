@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TourResponseDTO {
     private Long id;
-    private int pointJoueur1;
-    private int pointJoueur2;
-    private String decisionJoueur1;
-    private String decisionJoueur2;
+    private int roundNumber;
+    private String status;
 }

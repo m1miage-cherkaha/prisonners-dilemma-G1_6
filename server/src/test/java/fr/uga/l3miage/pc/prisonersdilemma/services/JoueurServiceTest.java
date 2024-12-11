@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
 
 
 @ExtendWith(MockitoExtension.class)
-public class JoueurServiceTest {
+class JoueurServiceTest {
 
     @Mock
     private JoueurRepository joueurRepository;
@@ -80,6 +80,41 @@ public class JoueurServiceTest {
         });
 
         assertEquals("Joueur non trouvé", exception.getMessage());
+        verify(joueurRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testLeaveGame() {
+        when(joueurRepository.findById(anyLong())).thenReturn(Optional.of(joueur));
+
+        boolean result = joueurService.leaveGame(1L, TypeStrategie.TOUJOURS_COOPERER.toString());
+
+        assertTrue(result);
+        assertEquals(TypeStrategie.TOUJOURS_COOPERER, joueur.getStrategie());
+        verify(joueurRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testLeaveGameJoueurNotFound() {
+        when(joueurRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            joueurService.leaveGame(1L, "COOPERATE");
+        });
+
+        assertEquals("Joueur non trouvé", exception.getMessage());
+        verify(joueurRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testLeaveGameInvalidStrategy() {
+        when(joueurRepository.findById(anyLong())).thenReturn(Optional.of(joueur));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            joueurService.leaveGame(1L, "INVALID_STRATEGY");
+        });
+
+        assertTrue(exception instanceof IllegalArgumentException);
         verify(joueurRepository, times(1)).findById(1L);
     }
 }

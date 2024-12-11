@@ -7,9 +7,8 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class TourRequest {
-    private Long idPartie;
-    private Long id;
+public class TourRequestDTO {
+    private Long idJoueur;
     private String decisionJoueur1;
-    private String decisionJoueur2;
+    private boolean isStrategyAdapter;
 }

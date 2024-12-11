@@ -1,8 +1,5 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
-
-import java.lang.reflect.Type;
-
 import javax.persistence.*;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;

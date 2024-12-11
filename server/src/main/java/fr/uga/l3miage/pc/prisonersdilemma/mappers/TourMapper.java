@@ -9,8 +9,7 @@ public class TourMapper {
     public static TourResponseDTO toTourResponseDTO(Tour tour){
         return TourResponseDTO.builder()
                 .id(tour.getId())
-                .decisionJoueur1(tour.getDecisionJoueur1().toString())
-                .decisionJoueur2(tour.getDecisionJoueur2().toString())
+                .status(tour.getStatus())
                 .build();
     }
 

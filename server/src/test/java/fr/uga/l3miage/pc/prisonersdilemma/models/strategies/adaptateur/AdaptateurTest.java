@@ -9,10 +9,10 @@ import java.util.List;
 
 
 
-public class AdaptateurTest {
+class AdaptateurTest {
 
     @Test
-    public void testToujoursCooperer() {
+    void testToujoursCooperer() {
         Adaptateur adaptateur = new Adaptateur(TypeStrategie.TOUJOURS_COOPERER);
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR);
         Decision decision = adaptateur.faireChoix(coupsAdversaire);
@@ -20,7 +20,7 @@ public class AdaptateurTest {
     }
 
     @Test
-    public void testToujoursTrahir() {
+    void testToujoursTrahir() {
         Adaptateur adaptateur = new Adaptateur(TypeStrategie.TOUJOURS_TRAHIR);
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR);
         Decision decision = adaptateur.faireChoix(coupsAdversaire);
@@ -28,7 +28,7 @@ public class AdaptateurTest {
     }
 
     @Test
-    public void testStrategieNonReconnue() {
+    void testStrategieNonReconnue() {
         Adaptateur adaptateur = new Adaptateur(TypeStrategie.ALEATOIRE);
         List<Decision> coupsAdversaire = Arrays.asList(Decision.COOPERER, Decision.TRAHIR);
         Decision decision = adaptateur.faireChoix(coupsAdversaire);
