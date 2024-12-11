@@ -13,20 +13,12 @@
         <module>rest-api</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>2.2.3</version>
-        </dependency>
-    </dependencies>
-
 
     <!--Indispensable pour faire démarrer spring boot, ici maven récupérer le pom.xml qui correspond à cette dépendance-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.0.RELEASE</version>
+        <version>2.7.18</version>
         <relativePath/>
     </parent>
 
@@ -34,7 +26,7 @@
     <properties>
     
         <lombok.version>1.18.30</lombok.version>
-        <springBoot.version>3.0.0</springBoot.version>
+        <springBoot.version>2.7.18</springBoot.version>
         <springFoxSwagger.version>2.6.0</springFoxSwagger.version>
         <swagger-annotation.version>1.5.9</swagger-annotation.version>
         <apache-httpclient.version>4.5.14</apache-httpclient.version>
@@ -98,9 +90,16 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>2.6.3</version>
+                    <version>2.7.18</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                     <configuration>
-                        <mainClass>fr/uga/l3miage/pc/prisonersdilemma/PrisonersDilemmaApplication</mainClass>
+                        <mainClass>fr.uga.l3miage.pc.prisonersdilemma.PrisonersDilemmaApplication</mainClass>
                     </configuration>
                 </plugin>
             </plugins>
