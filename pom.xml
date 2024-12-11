@@ -10,7 +10,6 @@
 
     <modules>
         <module>server</module>
-        <module>rest-api</module>
     </modules>
 
 
