@@ -3,6 +3,8 @@ package fr.uga.l3miage.pc.prisonersdilemma.services;
 import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class JoueurService {
 
     @Autowired
     private JoueurRepository joueurRepository;
+    @Autowired
+    private PartieRepository partieRepository;
 
     // Créer un nouveau joueur
     public Joueur createJoueur(Joueur joueur) {
@@ -41,6 +45,7 @@ public class JoueurService {
         return getJoueurById(idPlayer).getScore();
     }
     public void deleteAllJoueurs(){
+        partieRepository.deleteAll();
         joueurRepository.deleteAll();
     }
 }
