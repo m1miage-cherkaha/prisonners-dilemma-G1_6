@@ -36,9 +36,11 @@ public class PartieService {
 
     public PartieResponseDTO demarrerNouvellePartie(PartieCreationRequest partieCreationRequest){
         Joueur joueur1 = new Joueur(partieCreationRequest.getNomJoueur1());
+        Joueur joueur2 = new Joueur("unknown");
         joueurRepository.save(joueur1);
+        joueurRepository.save(joueur2);
 
-        Partie nouvellePartie = new Partie(joueur1,new Joueur("unknown"),partieCreationRequest.getNbTours());
+        Partie nouvellePartie = new Partie(joueur1,joueur2,partieCreationRequest.getNbTours());
         partieRepository.save(nouvellePartie);
         nouvellePartie.getJoueur1();
 
@@ -49,10 +51,11 @@ public class PartieService {
         Partie partie = partieRepository.findAll().get(0);
 
         Joueur joueur2 =  new Joueur(partieJoinRequest.getNomJoueur2());
+
+        joueurRepository.save(joueur2);
         partie.setJoueur2(joueur2);
 
         partieRepository.save(partie);
-        joueurRepository.save(joueur2);
 
         return PartieMapper.toPartieResponseDTO(partie);
     }
