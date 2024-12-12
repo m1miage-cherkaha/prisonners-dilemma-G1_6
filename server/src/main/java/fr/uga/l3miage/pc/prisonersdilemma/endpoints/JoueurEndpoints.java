@@ -28,4 +28,6 @@ public interface JoueurEndpoints {
     public boolean leaveGame(@RequestBody LeaveRequestDTO body);
     @GetMapping("/player/{idPlayer}/score")
     public int getScore(@PathVariable Long idPlayer);
+    @RequestMapping(value = "/players/delete", method = RequestMethod.DELETE)
+    public void deleteAllJoueurs();
 }

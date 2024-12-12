@@ -41,4 +41,11 @@ public class JoueurController implements JoueurEndpoints {
     public int getScore(@PathVariable Long idPlayer) {
         return joueurService.getScore(idPlayer);
     }
+
+    @Override
+    public void deleteAllJoueurs() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteAllJoueurs'");
+    }
+    
 }

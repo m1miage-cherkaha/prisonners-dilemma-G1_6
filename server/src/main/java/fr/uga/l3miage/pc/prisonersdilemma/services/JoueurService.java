@@ -40,4 +40,7 @@ public class JoueurService {
     public int getScore(Long idPlayer) {
         return getJoueurById(idPlayer).getScore();
     }
+    public void deleteAllJoueurs(){
+        joueurRepository.deleteAll();
+    }
 }
