@@ -1,7 +1,13 @@
-# Template Dilemme du Prisonnier
+# Dilemma prisonner G1_6
 
-### Lien vers le front
+## Deploiement
+### Front
+https://m1miage-thauvinl.github.io/dilemma-prisonner-front/acceuil
+### Back
+https://prisonners-dilemma-g1-6-9c636af5bfc2.herokuapp.com
 
+-----
+### Lien vers le repo du front
 https://github.com/m1miage-thauvinl/dilemma-prisonner-front
 
 ### Pré-requis
@@ -16,14 +22,3 @@ Avoir installé
    docker-compose -f docker/docker-compose.yml up &
 `
 2. Lancer le projet depuis l'interface d'intellij
-
-# Features : 
-
-## Done :
-* Implémentation des endpoints qui vont servir à lancer une partie
-
-## To fix :
-* Configuration Docker compose
-
-## To do :
-* Création de la bd sur pgadmin
