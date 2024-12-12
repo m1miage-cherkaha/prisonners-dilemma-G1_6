@@ -39,9 +39,8 @@ public class PartieService {
         joueurRepository.save(joueur1);
 
         Partie nouvellePartie = new Partie(joueur1,new Joueur("unknown"),partieCreationRequest.getNbTours());
-        nouvellePartie.getJoueur1();
-
         partieRepository.save(nouvellePartie);
+        nouvellePartie.getJoueur1();
 
         return PartieMapper.toPartieResponseDTO(nouvellePartie);
 
