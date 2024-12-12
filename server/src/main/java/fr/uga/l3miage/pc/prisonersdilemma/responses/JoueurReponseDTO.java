@@ -9,5 +9,4 @@ public class JoueurReponseDTO {
     private Long id;
     private String nom;
     private int score;
-
 }

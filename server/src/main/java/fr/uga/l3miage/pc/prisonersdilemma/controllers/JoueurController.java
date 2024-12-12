@@ -38,4 +38,7 @@ public class JoueurController implements JoueurEndpoints {
     public boolean leaveGame(LeaveRequestDTO body) {
         return joueurService.leaveGame(body.getId(), body.getStrategy());
     }
+    public int getScore(@PathVariable Long idPlayer) {
+        return joueurService.getScore(idPlayer);
+    }
 }

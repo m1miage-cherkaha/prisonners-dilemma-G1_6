@@ -36,4 +36,8 @@ public class JoueurService {
         
         return reussite;
     }
+
+    public int getScore(Long idPlayer) {
+        return getJoueurById(idPlayer).getScore();
+    }
 }
