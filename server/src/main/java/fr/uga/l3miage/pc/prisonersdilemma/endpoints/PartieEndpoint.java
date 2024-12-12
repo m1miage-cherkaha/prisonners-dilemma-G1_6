@@ -8,6 +8,7 @@ import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.ScoreResponseDTO;
 
 @RestController
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RequestMapping("/api/parties")
 public interface PartieEndpoint {
 
