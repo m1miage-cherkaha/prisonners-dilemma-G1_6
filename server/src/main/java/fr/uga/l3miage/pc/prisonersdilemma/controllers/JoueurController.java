@@ -44,8 +44,7 @@ public class JoueurController implements JoueurEndpoints {
 
     @Override
     public void deleteAllJoueurs() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteAllJoueurs'");
+        joueurService.deleteAllJoueurs();
     }
     
 }
