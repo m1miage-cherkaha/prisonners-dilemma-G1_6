@@ -1,14 +1,10 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
-import org.springframework.data.repository.query.parser.Part;
-
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -24,6 +20,9 @@ public class Tour {
     private int pointJoueur2;
     private Decision decisionJoueur1;
     private Decision decisionJoueur2;
+    private String status;
 
+    @OneToOne
+    @JoinColumn(name = "partie_id")
     Partie partie;
 }

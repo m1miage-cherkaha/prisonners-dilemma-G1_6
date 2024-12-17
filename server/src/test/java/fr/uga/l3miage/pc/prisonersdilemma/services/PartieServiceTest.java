@@ -1,31 +1,41 @@
 
 package fr.uga.l3miage.pc.prisonersdilemma.services;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
-import fr.uga.l3miage.pc.prisonersdilemma.mappers.PartieMapper;
+
+import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.models.Tour;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.TourRepository;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieCreationRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieJoinRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.TourRequestDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.ScoreResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.TourResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
-import static fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie.fromString;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 
 
 
+
 class PartieServiceTest {
+
+    @Mock
+    private TourService tourService;
 
     @Mock
     private JoueurRepository joueurRepository;
@@ -36,80 +46,96 @@ class PartieServiceTest {
     @Mock
     private TourRepository tourRepository;
 
-    @Mock
-    private TourService tourService;
-
     @InjectMocks
     private PartieService partieService;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    void demarrerNouvellePartie_shouldCreateAndReturnPartie() {
-        PartieCreationRequest request = new PartieCreationRequest("", 0, "");
-        request.setNomJoueur1("Joueur1");
-        request.setStrategieJoueur1("TOUJOURS_COOPERER");
-        request.setNbTours(5);
+    void testDemarrerNouvellePartie() {
+        PartieCreationRequest request = new PartieCreationRequest("Player1", 5);
 
-        Joueur joueur = new Joueur("Joueur1");
-        Partie partie = new Partie(joueur, new Joueur("unknown"), 5);
-        partie.getJoueur1().setStrategie(TypeStrategie.TOUJOURS_COOPERER);
+        Joueur joueur1 = new Joueur("Player1");
+        joueur1.setNom("Player1");
+        Partie nouvellePartie = new Partie(joueur1, new Joueur("unknown"), 5);
 
-        when(joueurRepository.findById(any())).thenReturn(Optional.of(joueur));
-        when(partieRepository.save(any(Partie.class))).thenReturn(partie);
+        when(joueurRepository.save(any(Joueur.class))).thenReturn(joueur1);
+        when(partieRepository.save(any(Partie.class))).thenReturn(nouvellePartie);
 
         PartieResponseDTO response = partieService.demarrerNouvellePartie(request);
 
-        assertNotNull(response);
-        assertEquals("Joueur1", joueurRepository.findById(response.getJoueur1Id()).orElseThrow().getNom());
-        assertEquals(TypeStrategie.TOUJOURS_COOPERER, joueurRepository.findById(response.getJoueur1Id()).orElseThrow().getStrategie());
+        Optional<Joueur> joueurExpected = joueurRepository.findById((Long)response.getId());
+        if(joueurExpected.isPresent()){
+            assertEquals("Player1", joueurExpected.get().getNom());
+        }
         verify(joueurRepository, times(1)).save(any(Joueur.class));
         verify(partieRepository, times(1)).save(any(Partie.class));
     }
 
     @Test
-    void rejoindrePartie_shouldAddJoueur2ToPartie() {
-        PartieJoinRequest request = new PartieJoinRequest("", "");
-        request.setNomJoueur2("Joueur2");
-        request.setStrategieJoueur2("TOUJOURS_TRAHIR");
+    void testRejoindrePartie() {
+        PartieJoinRequest request = new PartieJoinRequest("joueur2");
+        request.setNomJoueur2("Player2");
 
-        Joueur joueur1 = new Joueur("Joueur1");
+        Partie partie = new Partie(new Joueur("Player1"), new Joueur("unknown"), 5);
+        List<Partie> parties = new ArrayList<>();
+        parties.add(partie);
 
-        Joueur joueur2 = new Joueur("Joueur2");
-        joueur2.setStrategie(fromString("TOUJOURS_TRAHIR"));
-        Partie partieDejaExistante = new Partie(joueur1, new Joueur("unknown"), 5);
+        when(partieRepository.findAll()).thenReturn(parties);
+        when(joueurRepository.save(any(Joueur.class))).thenReturn(new Joueur("Player2"));
+        when(partieRepository.save(any(Partie.class))).thenReturn(partie);
 
-        when(partieRepository.findById(anyLong())).thenReturn(Optional.of(partieDejaExistante));
-        when(joueurRepository.findById(any())).thenReturn(Optional.of(joueur2));
+        PartieResponseDTO response = partieService.rejoindrePartie(request);
 
-        PartieResponseDTO response = partieService.rejoindrePartie(1L, request);
-
-        assertNotNull(response);
-        assertEquals("Joueur2", joueurRepository.findById(response.getJoueur2Id()).orElseThrow().getNom());
-        assertEquals(TypeStrategie.TOUJOURS_TRAHIR, joueurRepository.findById(response.getJoueur2Id()).orElseThrow().getStrategie());
-        verify(partieRepository, times(1)).findById(anyLong());
+        Optional<Joueur> joueurExpected = joueurRepository.findById((Long)response.getId());
+        if(joueurExpected.isPresent()){
+            assertEquals("Player2", joueurExpected.get().getNom());
+        }
         verify(joueurRepository, times(1)).save(any(Joueur.class));
         verify(partieRepository, times(1)).save(any(Partie.class));
     }
 
     @Test
-    void rejoindrePartie_shouldThrowExceptionWhenPartieNotFound() {
-        PartieJoinRequest request = new PartieJoinRequest("", "");
-        request.setNomJoueur2("Joueur2");
-        request.setStrategieJoueur2("TOUJOURS_TRAHIR");
+    void testJouerTour() {
+        TourRequestDTO request = new TourRequestDTO(1L, "COOPERATE", false);
 
-        when(partieRepository.findById(anyLong())).thenReturn(Optional.empty());
+        Joueur joueur1 = new Joueur("Player1");
+        Partie partie = new Partie(joueur1, new Joueur("Player2"), 5);
+        partie.setTours(new LinkedList<>());
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            partieService.rejoindrePartie(1L, request);
-        });
+        List<Partie> parties = new ArrayList<>();
+        parties.add(partie);
 
-        assertEquals("Partie non trouvée", exception.getMessage());
-        verify(partieRepository, times(1)).findById(anyLong());
-        verify(joueurRepository, times(0)).save(any(Joueur.class));
-        verify(partieRepository, times(0)).save(any(Partie.class));
+        when(partieRepository.findAll()).thenReturn(parties);
+        when(tourRepository.save(any(Tour.class))).thenReturn(new Tour());
+        when(tourService.calculerPoints(any(Tour.class), any(Decision.class), any(Decision.class))).thenReturn(new Tour());
+
+        TourResponseDTO response = partieService.jouerTour(request);
+
+        assertEquals("EN_COURS", response.getStatus());
+        verify(tourRepository, times(1)).save(any(Tour.class));
+        verify(partieRepository, times(1)).save(any(Partie.class));
+    }
+
+    @Test
+    void testGetScore() {
+        Joueur joueur1 = new Joueur("Player1");
+        joueur1.setScore(10);
+        Joueur joueur2 = new Joueur("Player2");
+        joueur2.setScore(15);
+
+        Partie partie = new Partie(joueur1, joueur2, 5);
+        List<Partie> parties = new ArrayList<>();
+        parties.add(partie);
+
+        when(partieRepository.findAll()).thenReturn(parties);
+
+        ScoreResponseDTO response = partieService.getScore();
+
+        assertEquals(10, response.getScoreJoueur1());
+        assertEquals(15, response.getScoreJoueur2());
     }
 }

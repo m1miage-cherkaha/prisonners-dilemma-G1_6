@@ -1,12 +1,8 @@
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
 import fr.uga.l3miage.pc.prisonersdilemma.models.Tour;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
 import fr.uga.l3miage.pc.prisonersdilemma.repositories.TourRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,13 +11,12 @@ public class TourService {
 
  private final TourRepository tourRepository;
 
- @Autowired
 public TourService(TourRepository tourRepository){
   this.tourRepository = tourRepository;
 
  }
 
-public Tour demarrerNouveauTour(Partie partie) {
+public Tour demarrerNouveauTour() {
   Tour tour = new Tour();
 
   // Réinitialiser les points des joueurs et les décisions

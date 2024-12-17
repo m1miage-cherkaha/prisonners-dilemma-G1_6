@@ -1,9 +1,9 @@
 package fr.uga.l3miage.pc.prisonersdilemma.controllers;
-import fr.uga.l3miage.pc.prisonersdilemma.controllers.PartieController;
 import fr.uga.l3miage.pc.prisonersdilemma.services.PartieService;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieCreationRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.requests.PartieJoinRequest;
-import fr.uga.l3miage.pc.prisonnersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.responses.ScoreResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,33 +25,37 @@ class PartieControllerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     void testCreatePartie() {
-        //Given
-        PartieCreationRequest request = new PartieCreationRequest(null, 0, null);
+        PartieCreationRequest request = new PartieCreationRequest("joueur1", 3);
         PartieResponseDTO response = new PartieResponseDTO();
-
-        //when
         when(partieService.demarrerNouvellePartie(any(PartieCreationRequest.class))).thenReturn(response);
-        
-        //then
+
         PartieResponseDTO result = partieController.createPartie(request);
 
         assertEquals(response, result);
     }
 
     @Test
-    void testUpdatePartie() {
-        Long idPartie = 1L;
-        PartieJoinRequest request = new PartieJoinRequest(null, null);
-        PartieResponseDTO response = new PartieResponseDTO();
-        
-        when(partieService.rejoindrePartie(any(Long.class), any(PartieJoinRequest.class))).thenReturn(response);
+    void testGetScore() {
+        ScoreResponseDTO response = new ScoreResponseDTO(2,2);
+        when(partieService.getScore()).thenReturn(response);
 
-        PartieResponseDTO result = partieController.updatePartie(idPartie, request);
+        ScoreResponseDTO result = partieController.getScore();
+
+        assertEquals(response, result);
+    }
+
+    @Test
+    void testUpdatePartie() {
+        PartieJoinRequest request = new PartieJoinRequest("joueur2");
+        PartieResponseDTO response = new PartieResponseDTO();
+        when(partieService.rejoindrePartie(any(PartieJoinRequest.class))).thenReturn(response);
+
+        PartieResponseDTO result = partieController.updatePartie(request);
 
         assertEquals(response, result);
     }

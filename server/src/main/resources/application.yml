@@ -1,0 +1,21 @@
+
+server:
+  port: ${PORT:8080}  # Default to 8080 if PORT is not set (for local development)
+
+
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+l3:
+  miage:
+    webservice:
+      rest:
+        url: "http://localhost:8080"

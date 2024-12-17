@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
-public class DonnantDonnantStrategieTest {
+class DonnantDonnantStrategieTest {
 
     @Test
     void testFaireChoixWithSingleDecision() {
