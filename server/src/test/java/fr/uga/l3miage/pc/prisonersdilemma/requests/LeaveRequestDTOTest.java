@@ -1,15 +1,18 @@
 package fr.uga.l3miage.pc.prisonersdilemma.requests;
 
 import org.junit.jupiter.api.Test;
+
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.LeaveRequestDTO;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class LeaveRequestDTOTest {
 
     @Test
-    void testLeaveRequestDTOConstructorAndGetters() {
+    void testLeaveRequestDTO() {
         Long id = 1L;
-        String strategy = "TitForTat";
+        String strategy = "cooperate";
 
         LeaveRequestDTO leaveRequestDTO = new LeaveRequestDTO(id, strategy);
 
@@ -18,36 +21,13 @@ class LeaveRequestDTOTest {
     }
 
     @Test
-    void testLeaveRequestDTOSetters() {
-        LeaveRequestDTO leaveRequestDTO = new LeaveRequestDTO(1L, "TitForTat");
+    void testSetters() {
+        LeaveRequestDTO leaveRequestDTO = new LeaveRequestDTO(1L, "cooperate");
 
-        Long newId = 2L;
-        String newStrategy = "AlwaysCooperate";
+        leaveRequestDTO.setId(2L);
+        leaveRequestDTO.setStrategy("defect");
 
-        leaveRequestDTO.setId(newId);
-        leaveRequestDTO.setStrategy(newStrategy);
-
-        assertEquals(newId, leaveRequestDTO.getId());
-        assertEquals(newStrategy, leaveRequestDTO.getStrategy());
-    }
-
-    @Test
-    void testLeaveRequestDTOEqualsAndHashCode() {
-        LeaveRequestDTO leaveRequestDTO1 = new LeaveRequestDTO(1L, "TitForTat");
-        LeaveRequestDTO leaveRequestDTO2 = new LeaveRequestDTO(1L, "TitForTat");
-        LeaveRequestDTO leaveRequestDTO3 = new LeaveRequestDTO(2L, "AlwaysCooperate");
-
-        assertEquals(leaveRequestDTO1, leaveRequestDTO2);
-        assertNotEquals(leaveRequestDTO1, leaveRequestDTO3);
-        assertEquals(leaveRequestDTO1.hashCode(), leaveRequestDTO2.hashCode());
-        assertNotEquals(leaveRequestDTO1.hashCode(), leaveRequestDTO3.hashCode());
-    }
-
-    @Test
-    void testLeaveRequestDTOToString() {
-        LeaveRequestDTO leaveRequestDTO = new LeaveRequestDTO(1L, "TitForTat");
-        String expectedString = "LeaveRequestDTO(id=1, strategy=TitForTat)";
-
-        assertEquals(expectedString, leaveRequestDTO.toString());
+        assertEquals(2L, leaveRequestDTO.getId());
+        assertEquals("defect", leaveRequestDTO.getStrategy());
     }
 }

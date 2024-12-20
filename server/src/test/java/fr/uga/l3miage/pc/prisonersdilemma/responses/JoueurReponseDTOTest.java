@@ -1,8 +1,11 @@
 package fr.uga.l3miage.pc.prisonersdilemma.responses;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Test;
+
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.JoueurReponseDTO;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class JoueurReponseDTOTest {
 

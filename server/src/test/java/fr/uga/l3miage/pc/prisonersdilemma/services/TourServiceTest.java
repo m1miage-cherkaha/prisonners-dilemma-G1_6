@@ -1,8 +1,10 @@
 
 package fr.uga.l3miage.pc.prisonersdilemma.services;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Tour;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.TourRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.TourService;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.entities.Tour;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.repositories.TourRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,7 +25,7 @@ class TourServiceTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

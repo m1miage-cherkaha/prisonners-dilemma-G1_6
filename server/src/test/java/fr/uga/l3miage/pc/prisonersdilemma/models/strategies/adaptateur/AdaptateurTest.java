@@ -1,7 +1,9 @@
 
 package fr.uga.l3miage.pc.prisonersdilemma.models.strategies.adaptateur;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategie;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.models.strategies.adaptateur.Adaptateur;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;

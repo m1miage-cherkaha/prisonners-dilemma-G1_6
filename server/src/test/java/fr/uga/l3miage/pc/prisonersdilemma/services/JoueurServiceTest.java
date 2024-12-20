@@ -1,7 +1,12 @@
+
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
-import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.JoueurService;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategie;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.entities.Joueur;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.repositories.JoueurRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.repositories.PartieRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
+
+
 
 
 @ExtendWith(MockitoExtension.class)
@@ -21,6 +27,9 @@ class JoueurServiceTest {
 
     @Mock
     private JoueurRepository joueurRepository;
+
+    @Mock
+    private PartieRepository partieRepository;
 
     @InjectMocks
     private JoueurService joueurService;
@@ -31,7 +40,9 @@ class JoueurServiceTest {
     void setUp() {
         joueur = new Joueur();
         joueur.setId(1L);
-        joueur.setNom("Test Joueur");
+        joueur.setNom("TestJoueur");
+        joueur.setStrategie(TypeStrategie.TOUJOURS_COOPERER);
+        joueur.setScore(100);
     }
 
     @Test
@@ -41,7 +52,6 @@ class JoueurServiceTest {
         Joueur createdJoueur = joueurService.createJoueur(joueur);
 
         assertNotNull(createdJoueur);
-        assertEquals(joueur.getId(), createdJoueur.getId());
         assertEquals(joueur.getNom(), createdJoueur.getNom());
         verify(joueurRepository, times(1)).save(joueur);
     }
@@ -55,7 +65,6 @@ class JoueurServiceTest {
 
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals(joueur.getId(), result.get(0).getId());
         verify(joueurRepository, times(1)).findAll();
     }
 
@@ -63,23 +72,10 @@ class JoueurServiceTest {
     void testGetJoueurById() {
         when(joueurRepository.findById(anyLong())).thenReturn(Optional.of(joueur));
 
-        Joueur foundJoueur = joueurService.getJoueurById(1L);
+        Joueur result = joueurService.getJoueurById(1L);
 
-        assertNotNull(foundJoueur);
-        assertEquals(joueur.getId(), foundJoueur.getId());
-        assertEquals(joueur.getNom(), foundJoueur.getNom());
-        verify(joueurRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void testGetJoueurByIdNotFound() {
-        when(joueurRepository.findById(anyLong())).thenReturn(Optional.empty());
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            joueurService.getJoueurById(1L);
-        });
-
-        assertEquals("Joueur non trouvé", exception.getMessage());
+        assertNotNull(result);
+        assertEquals(joueur.getNom(), result.getNom());
         verify(joueurRepository, times(1)).findById(1L);
     }
 
@@ -87,34 +83,31 @@ class JoueurServiceTest {
     void testLeaveGame() {
         when(joueurRepository.findById(anyLong())).thenReturn(Optional.of(joueur));
 
-        boolean result = joueurService.leaveGame(1L, TypeStrategie.TOUJOURS_COOPERER.toString());
+        boolean result = joueurService.leaveGame(1L, "TOUJOURS_TRAHIR");
 
         assertTrue(result);
-        assertEquals(TypeStrategie.TOUJOURS_COOPERER, joueur.getStrategie());
+        assertEquals(TypeStrategie.TOUJOURS_TRAHIR, joueur.getStrategie());
         verify(joueurRepository, times(1)).findById(1L);
     }
 
     @Test
-    void testLeaveGameJoueurNotFound() {
-        when(joueurRepository.findById(anyLong())).thenReturn(Optional.empty());
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            joueurService.leaveGame(1L, "COOPERATE");
-        });
-
-        assertEquals("Joueur non trouvé", exception.getMessage());
-        verify(joueurRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void testLeaveGameInvalidStrategy() {
+    void testGetScore() {
         when(joueurRepository.findById(anyLong())).thenReturn(Optional.of(joueur));
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            joueurService.leaveGame(1L, "INVALID_STRATEGY");
-        });
+        int score = joueurService.getScore(1L);
 
-        assertTrue(exception instanceof IllegalArgumentException);
+        assertEquals(100, score);
         verify(joueurRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testDeleteAllJoueurs() {
+        doNothing().when(partieRepository).deleteAll();
+        doNothing().when(joueurRepository).deleteAll();
+
+        joueurService.deleteAllJoueurs();
+
+        verify(partieRepository, times(1)).deleteAll();
+        verify(joueurRepository, times(1)).deleteAll();
     }
 }

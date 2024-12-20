@@ -1,9 +1,11 @@
 package fr.uga.l3miage.pc.prisonersdilemma.controllers;
-import fr.uga.l3miage.pc.prisonersdilemma.services.PartieService;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.ScoreResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.PartieService;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.controllers.PartieController;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.ScoreResponseDTO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,7 +27,7 @@ class PartieControllerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
