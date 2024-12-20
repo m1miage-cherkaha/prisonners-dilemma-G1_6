@@ -3,11 +3,13 @@ package fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persis
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategie;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Joueur {

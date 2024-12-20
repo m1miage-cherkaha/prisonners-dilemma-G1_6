@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -90,8 +91,9 @@ class DonnantDonnantAleatoireStrategieTest {
         when(mockRandom.nextInt(10)).thenReturn(5); // Not the special case (1)
 
         // Act & Assert
+        List<Decision> emptyHistory = Collections.emptyList();
         assertThrows(IndexOutOfBoundsException.class, 
-        () -> strategie.faireChoix(new ArrayList<>()));
+                    () -> strategie.faireChoix(emptyHistory));
     }
 
     //@Test
