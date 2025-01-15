@@ -1,6 +1,9 @@
 package fr.uga.l3miage.pc.prisonersdilemma.requests;
 
 import org.junit.jupiter.api.Test;
+
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.PartieJoinRequest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 

@@ -1,19 +1,22 @@
 
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Partie;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Tour;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.PartieRepository;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.JoueurRepository;
-import fr.uga.l3miage.pc.prisonersdilemma.repositories.TourRepository;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieCreationRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.PartieJoinRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.TourRequestDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.PartieResponseDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.ScoreResponseDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.TourResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.PartieService;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.TourService;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.PartieCreationRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.PartieJoinRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.TourRequestDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.PartieResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.ScoreResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.TourResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.entities.Joueur;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.entities.Partie;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.entities.Tour;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.repositories.JoueurRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.repositories.PartieRepository;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.repositories.TourRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -51,7 +54,7 @@ class PartieServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -71,7 +74,7 @@ class PartieServiceTest {
         if(joueurExpected.isPresent()){
             assertEquals("Player1", joueurExpected.get().getNom());
         }
-        verify(joueurRepository, times(1)).save(any(Joueur.class));
+        verify(joueurRepository, times(2)).save(any(Joueur.class));
         verify(partieRepository, times(1)).save(any(Partie.class));
     }
 

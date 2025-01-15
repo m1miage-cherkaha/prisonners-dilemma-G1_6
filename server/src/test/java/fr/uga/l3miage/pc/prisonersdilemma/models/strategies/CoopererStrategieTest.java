@@ -1,6 +1,8 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models.strategies;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.models.strategies.CoopererStrategie;
+
 import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;

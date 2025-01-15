@@ -1,8 +1,10 @@
 package fr.uga.l3miage.pc.prisonersdilemma.controllers;
 
-import fr.uga.l3miage.pc.prisonersdilemma.services.PartieService;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.TourRequestDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.TourResponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.PartieService;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.controllers.TourController;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.TourRequestDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.TourResponseDTO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +24,7 @@ class TourControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

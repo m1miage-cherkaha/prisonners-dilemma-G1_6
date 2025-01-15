@@ -1,50 +1,107 @@
 package fr.uga.l3miage.pc.prisonersdilemma.models;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategie;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.entities.Joueur;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class JoueurTest {
 
-    private Joueur joueur;
-
-    @BeforeEach
-    public void setUp() {
-        joueur = new Joueur("TestPlayer");
-    }
-
     @Test
-    void testAjouterPoints() {
-        joueur.ajouterPoints(10);
-        assertEquals(10, joueur.getScore(), "Score should be 10 after adding 10 points");
+    void testDefaultConstructor() {
+        // Act
+        Joueur joueur = new Joueur();
 
-        joueur.ajouterPoints(5);
-        assertEquals(15, joueur.getScore(), "Score should be 15 after adding 5 more points");
+        // Assert
+        assertNull(joueur.getId());
+        assertNull(joueur.getNom());
+        assertEquals(0, joueur.getScore());
+        assertNull(joueur.getStrategie());
     }
 
     @Test
     void testConstructorWithName() {
-        assertEquals("TestPlayer", joueur.getNom(), "Name should be 'TestPlayer'");
-        assertEquals(0, joueur.getScore(), "Initial score should be 0");
+        // Arrange
+        String nomJoueur = "Alice";
+
+        // Act
+        Joueur joueur = new Joueur(nomJoueur);
+
+        // Assert
+        assertNull(joueur.getId());
+        assertEquals(nomJoueur, joueur.getNom());
+        assertEquals(0, joueur.getScore());
+        assertNull(joueur.getStrategie());
     }
 
     @Test
-    void testDefaultConstructor() {
-        Joueur defaultJoueur = new Joueur();
-        assertNull(defaultJoueur.getNom(), "Name should be null for default constructor");
-        assertEquals(0, defaultJoueur.getScore(), "Initial score should be 0 for default constructor");
+    void testFullConstructor() {
+        // Arrange
+        Long id = 1L;
+        String nomJoueur = "Bob";
+        int scoreInitial = 10;
+        TypeStrategie strategieJoueur = TypeStrategie.DONNANT_DONNANT;
+
+        // Act
+        Joueur joueur = new Joueur(id, nomJoueur, scoreInitial, strategieJoueur);
+
+        // Assert
+        assertEquals(id, joueur.getId());
+        assertEquals(nomJoueur, joueur.getNom());
+        assertEquals(scoreInitial, joueur.getScore());
+        assertEquals(strategieJoueur, joueur.getStrategie());
     }
 
     @Test
-    void testAllArgsConstructor() {
-        Joueur allArgsJoueur = new Joueur(1L, "AllArgsPlayer", 20, TypeStrategie.TOUJOURS_COOPERER);
-        assertEquals(1L, allArgsJoueur.getId(), "ID should be 1");
-        assertEquals("AllArgsPlayer", allArgsJoueur.getNom(), "Name should be 'AllArgsPlayer'");
-        assertEquals(20, allArgsJoueur.getScore(), "Score should be 20");
-        assertEquals(TypeStrategie.TOUJOURS_COOPERER, allArgsJoueur.getStrategie(), "Strategy should be COOPERATE");
+    void testAjouterPoints() {
+        // Arrange
+        Joueur joueur = new Joueur("Charlie");
+        int pointsInitiaux = joueur.getScore();
+        int pointsAAjouter = 5;
+
+        // Act
+        joueur.ajouterPoints(pointsAAjouter);
+
+        // Assert
+        assertEquals(pointsInitiaux + pointsAAjouter, joueur.getScore());
+    }
+
+    @Test
+    void testAjouterPointsNegative() {
+        // Arrange
+        Joueur joueur = new Joueur("David");
+        int pointsInitiaux = 10;
+        joueur.setScore(pointsInitiaux);
+        int pointsAAjouter = -3;
+
+        // Act
+        joueur.ajouterPoints(pointsAAjouter);
+
+        // Assert
+        assertEquals(pointsInitiaux + pointsAAjouter, joueur.getScore());
+    }
+
+    @Test
+    void testSettersAndGetters() {
+        // Arrange
+        Joueur joueur = new Joueur();
+        Long id = 2L;
+        String nomJoueur = "Eve";
+        int scoreJoueur = 15;
+        TypeStrategie strategieJoueur = TypeStrategie.TOUJOURS_COOPERER;
+
+        // Act
+        joueur.setId(id);
+        joueur.setNom(nomJoueur);
+        joueur.setScore(scoreJoueur);
+        joueur.setStrategie(strategieJoueur);
+
+        // Assert
+        assertEquals(id, joueur.getId());
+        assertEquals(nomJoueur, joueur.getNom());
+        assertEquals(scoreJoueur, joueur.getScore());
+        assertEquals(strategieJoueur, joueur.getStrategie());
     }
 }

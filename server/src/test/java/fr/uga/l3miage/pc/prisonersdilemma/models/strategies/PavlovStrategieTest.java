@@ -3,7 +3,8 @@ package fr.uga.l3miage.pc.prisonersdilemma.models.strategies;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.models.strategies.PavlovStrategie;
 
 import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.assertEquals;

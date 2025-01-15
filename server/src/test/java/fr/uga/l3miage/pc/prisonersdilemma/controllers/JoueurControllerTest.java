@@ -2,11 +2,13 @@
 package fr.uga.l3miage.pc.prisonersdilemma.controllers;
 
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategie;
-import fr.uga.l3miage.pc.prisonersdilemma.models.Joueur;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.LeaveRequestDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.JoueurReponseDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.services.JoueurService;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.JoueurService;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategie;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.controllers.JoueurController;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.requests.LeaveRequestDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.input.rest.responses.JoueurReponseDTO;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.adapters.output.persistence.entities.Joueur;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,7 +30,7 @@ class JoueurControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
